@@ -3,6 +3,8 @@
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
 ## Get started
+0. Dataset
+   https://www.kaggle.com/datasets/stoney71/new-york-city-transport-statistics/versions/4?resource=download
 
 1. Install dependencies
 
