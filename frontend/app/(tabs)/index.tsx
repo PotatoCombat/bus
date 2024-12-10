@@ -4,8 +4,32 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useEffect, useState } from 'react';
 
 export default function HomeScreen() {
+  let [data, setData] = useState("Loading2");
+
+  const fetchBuses = async () => {
+    return await fetch('http://localhost:3000/bus10')
+        .then(res => res.text())
+        .then(d => setData(d));
+  }
+
+  useEffect(() => {
+    fetchBuses();
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await fetch('http://localhost:3000/bus10'); // Replace with your API endpoint
+    //     const result = await response.json(); // Parse the JSON data
+    //     setData(result); // Set data to state
+    //     console.log(data);
+    //   } catch (err) {
+    //   }
+    // };
+    // fetchData();
+  }, []);
+  
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -16,7 +40,7 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Welcome! {data}</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
