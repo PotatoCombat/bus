@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
-
 import MapView from "react-native-maps";
+
 const styles = StyleSheet.create({
  container: {
     ...StyleSheet.absoluteFillObject,
