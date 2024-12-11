@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+const { fetchBusStops } = require('./utils/fetchBusStops');
+
 dotenv.config();
 
 const app = express();
@@ -18,7 +20,13 @@ app.get('/', (req, res) => {
   res.send('Welcome to Letz Get Bus Timings')
 });
 
+app.use(async (req, res, next) => {
+  req.busStops = await fetchBusStops();
+  next();
+});
+
 // Server routes
+app.use('/test', require('./routes/test'));
 app.use('/bus-route', require('./routes/bus-route'));
 app.use('/bus-arrival', require('./routes/bus-arrival'));
 
