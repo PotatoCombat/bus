@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 
 // Server routes
 app.use('/bus-route', require('./routes/bus-route'));
+app.use('/bus-arrival', require('./routes/bus-arrival'));
 
 // Server ready
 app.listen(process.env.PORT, () => {
