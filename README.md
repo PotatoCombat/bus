@@ -2,9 +2,32 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
-0. Dataset
-   https://www.kaggle.com/datasets/stoney71/new-york-city-transport-statistics/versions/4?resource=download
+## Background
+
+This app uses the API provided by LTA to retrieve real-time bus information.
+[LTA API] (https://datamall.lta.gov.sg/content/datamall/en/dynamic-data.html)
+
+## Backend - Get started
+
+1. Navigate to the backend folder
+
+   ```bash
+   cd backend
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Start the server
+
+   ```bash
+    node server.js
+   ```
+
+## Frontend - Get started
 
 1. Install dependencies
 
