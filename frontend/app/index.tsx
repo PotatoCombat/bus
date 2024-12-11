@@ -1,16 +1,7 @@
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import MapView from "react-native-maps";
-
-const styles = StyleSheet.create({
- container: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },  
-});
+import styles from "./styles";
+import Search from "./components/search/Search";
 
 export default function Index() {
   return (
@@ -24,6 +15,7 @@ export default function Index() {
           longitudeDelta: 0.55,
         }}
       />
+      <Search style={styles.search} />
     </View>
   );
 }
