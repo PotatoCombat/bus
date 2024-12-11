@@ -18,11 +18,11 @@ app.get('/', (req, res) => {
   res.send('Welcome to Letz Get Bus Timings')
 });
 
-// Add API KEY for all requests
-app.use(function (req, res, next) {
-  req.headers['AccountKey'] = process.env.ACCOUNT_KEY;
-  next();
-});
+// // Add API KEY for all requests
+// app.use(function (req, res, next) {
+//   req.headers['AccountKey'] = process.env.ACCOUNT_KEY;
+//   next();
+// });
 
 // Server routes
 app.use('/bus-route', require('./routes/bus-route'));
