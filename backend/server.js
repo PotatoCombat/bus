@@ -1,38 +1,33 @@
-const express = require('express'); //testing
+const express = require('express');
+
 const cors = require('cors');
-const fs = require('fs');
+const dotenv = require('dotenv');
 
-const app = express()
-const port = 3000
+dotenv.config();
 
-// Use CORS middleware to allow requests from specific origins
+const app = express();
+
+// Allow requests only from our frontend
 app.use(cors({
-  origin: 'http://localhost:8081', // Allow requests only from this origin
-  methods: ['GET'], // Optionally specify allowed methods
+  origin: process.env.FRONTEND,
+  methods: ['GET'],
 }));
 
+// Home
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  res.send('Welcome to Letz Get Bus Timings')
+});
 
-app.get('/bus10', (req, res) => {
-    let path = 'data/mta_1706.csv';
-    let data = 'ERROR2';
-    fs.open(path, 'r', (err, fd) => {
-        if (err) throw err;
-        const buffer = Buffer.alloc(100);
-        fs.read(fd, buffer, 0, buffer.length, 0, (err, bytes) => {
-            if (err) throw err;
-            res.send(buffer.toString('utf8'));
-            fs.close(fd, (err) => {
-                if (err) throw err;
-            })
-        })
-    })
-  })
+// Add API KEY for all requests
+app.use(function (req, res, next) {
+  req.headers['AccountKey'] = process.env.ACCOUNT_KEY;
+  next();
+});
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// Server routes
+app.use('/bus-route', require('./routes/bus-route'));
 
-
+// Server ready
+app.listen(process.env.PORT, () => {
+  console.log(`LGBT listening on port ${process.env.PORT}`)
+});
