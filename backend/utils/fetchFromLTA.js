@@ -1,4 +1,4 @@
-const fetchFromLTA = (url, options = {}) => {
+const fetchFromLTA = function (url, options = {}) {
     const headers = {
         'AccountKey': `${process.env.ACCOUNT_KEY}`,
         ...options.headers,
@@ -6,6 +6,4 @@ const fetchFromLTA = (url, options = {}) => {
     return fetch(url, { ...options, headers });
 };
 
-module.exports = {
-    fetchFromLTA
-};
+module.exports = fetchFromLTA;
