@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 
 const { fetchBusStops } = require('./utils');
+const fetchBusRoutes = require('./utils/fetchBusRoutes');
 
 dotenv.config();
 
@@ -22,11 +23,12 @@ app.get('/', (req, res) => {
 
 app.use(async (req, res, next) => {
   req.busStops = await fetchBusStops();
+  req.busRoutes = await fetchBusRoutes();
   next();
 });
 
 // Server routes
-app.use('/test', require('./routes/test'));
+app.use('/example', require('./routes/example'));
 app.use('/bus-route', require('./routes/bus-route'));
 app.use('/bus-arrival', require('./routes/bus-arrival'));
 
