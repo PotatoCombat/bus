@@ -30,9 +30,9 @@ router.get('/', async (req, res) => {
             timings.push({
                 ServiceNo : bus.ServiceNo,
                 NextBuses : [
-                    diff_minutes(new Date(bus.NextBus.EstimatedArrival), lastTimestamp),
-                    diff_minutes(new Date(bus.NextBus2.EstimatedArrival), lastTimestamp),
-                    diff_minutes(new Date(bus.NextBus3.EstimatedArrival), lastTimestamp)
+                    (bus.NextBus.EstimatedArrival != '')?diff_minutes(new Date(bus.NextBus.EstimatedArrival), lastTimestamp) : -1,
+                    (bus.NextBus2.EstimatedArrival != '')?diff_minutes(new Date(bus.NextBus2.EstimatedArrival), lastTimestamp) : -1,
+                    (bus.NextBus3.EstimatedArrival != '')?diff_minutes(new Date(bus.NextBus3.EstimatedArrival), lastTimestamp) : -1
                 ]
             });
         });
