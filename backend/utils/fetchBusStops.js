@@ -1,10 +1,10 @@
-const { fetchFromLTA } = require('./fetchFromLTA');
+const fetchFromLTA = require('./fetchFromLTA');
 
 let database = new Map();
 
 const recordsPerRequest = 500;
 
-async function fetchBusStops() {
+const fetchBusStops = async function () {
     if (database.size === 0) {
         let index = 0;
         let finished = false;
@@ -24,6 +24,4 @@ async function fetchBusStops() {
     return database;
 }
 
-module.exports = {
-    fetchBusStops
-}
+module.exports = fetchBusStops;

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { fetchFromLTA } = require('../utils/fetchFromLTA');
+const { fetchFromLTA } = require('../utils');
 
 let lastResult = undefined;
 let lastTimestamp = new Date();
