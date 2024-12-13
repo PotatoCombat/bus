@@ -8,17 +8,21 @@ const fetchBusStops = async function () {
     if (database.size === 0) {
         let index = 0;
         let finished = false;
+
+        let results = [];
         while (!finished) {
             await fetchFromLTA(`https://datamall2.mytransport.sg/ltaodataservice/BusStops?$skip=${index}`)
                 .then(response => response.json())
                 .then(json => json['value'])
-                .then(busStops => {
-                    for (let busStop of busStops) {
-                        database.set(busStop['BusStopCode'], busStop);
-                    }
+                .then(records => {
+                    results.push(...records);
                     index += recordsPerRequest;
-                    finished = busStops.length <= 0;
+                    finished = records.length <= 0;
                 });
+        }
+
+        for (let busStop of results) {
+            database.set(busStop['BusStopCode'], busStop);
         }
     }
     return database;

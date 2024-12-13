@@ -3,8 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-const { fetchBusStops } = require('./utils');
-const fetchBusRoutes = require('./utils/fetchBusRoutes');
+const { fetchBusStops, fetchBusRoutes } = require('./utils');
+// const fetchBusRoutes = require('./utils/fetchBusRoutes');
 
 dotenv.config();
 
