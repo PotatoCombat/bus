@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
 
+export const ROW_HEIGHT = 56;
+
 const commonStyles = StyleSheet.create({
     inputContainer: {
         backgroundColor: "white",
     },
     result: {
         backgroundColor: 'white',
-        maxHeight: 56,
-        minHeight: 56,
+        maxHeight: ROW_HEIGHT,
+        minHeight: ROW_HEIGHT,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -40,8 +42,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 20,
     marginLeft: 20,
-    maxHeight: 56,
-    minHeight: 56,
+    maxHeight: ROW_HEIGHT,
+    minHeight: ROW_HEIGHT,
   },
   rightIconContainer: {
     marginRight: 17,
@@ -57,30 +59,30 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 28,
   },
   noResult: {
-    textAlign: 'center',
-    width: '100%',
+    textAlign: "center",
+    width: "100%",
     fontSize: 14,
   },
   serviceNoContainer: {
     backgroundColor: "lightgray",
     borderRadius: 6,
     paddingHorizontal: 13,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   serviceNo: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   roadNameContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginHorizontal: 10,
-    maxWidth: '35%',
+    maxWidth: "35%",
   },
   roadName: {
     fontSize: 14,
-  }
+  },
 });
 
 export default styles;
