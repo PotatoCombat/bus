@@ -10,7 +10,7 @@ export default function SearchResults({
 }: {
   results: SearchResultInterface[] | null;
   setSelectedResult: Function;
-}) {
+}) {  
   return (
     <>
       {results != null && (
@@ -37,19 +37,25 @@ export default function SearchResults({
                           : styles.lastResult
                       }
                     >
-                      <View style={styles.serviceNoContainer}>
+                      <View style={{ ...styles.serviceNoContainer, flex: 2 }}>
                         <Text style={styles.serviceNo}>{item.serviceNo}</Text>
                       </View>
 
-                      <View style={styles.resultRoadNameContainer}>
+                      <View
+                        style={{ ...styles.resultRoadNameContainer, flex: 5 }}
+                      >
                         <Text style={styles.roadName}>
                           {item.originRoadName}
                         </Text>
                       </View>
 
-                      <Icon name="arrow-right" />
+                      <View style={{ flex: 1 }}>
+                        <Icon name="arrow-right" />
+                      </View>
 
-                      <View style={styles.resultRoadNameContainer}>
+                      <View
+                        style={{ ...styles.resultRoadNameContainer, flex: 5 }}
+                      >
                         <Text style={styles.roadName}>
                           {item.destinationRoadName}
                         </Text>

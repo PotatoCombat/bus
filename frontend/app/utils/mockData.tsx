@@ -1,12 +1,12 @@
 export const mockSearchResults = [
   {
     serviceNo: "888m",
-    originRoadName: "Yio Chu Kang a a a a a a a a ",
-    destinationRoadName: "Shenton Way",
+    originRoadName: "O Yio Chu Kang a a a a a a a a ",
+    destinationRoadName: "D Shenton Way",
   },
   {
     serviceNo: "88",
-    originRoadName: "Shenton Way Terminal",
-    destinationRoadName: "Yio Chu Kang Interchange",
+    originRoadName: "O Shenton Way Terminal",
+    destinationRoadName: "D Yio Chu Kang Interchange",
   },
 ];
