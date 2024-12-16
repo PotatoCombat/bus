@@ -7,6 +7,7 @@ import searchApi from "@/app/services/SearchApi";
 import SearchResults from "./SearchResults";
 import { searchBarPlaceholderText } from "@/app/utils/strings";
 import SearchResultDisplay from "./SearchResultDisplay";
+import { Colors } from "@/app/styles";
 
 export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   const [value, setValue] = useState("");
@@ -67,7 +68,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             onPress={handleClickSearchButton}
             style={styles.buttonIconContainer}
             activeOpacity={0.6}
-            underlayColor="#EEEEEE"
+            underlayColor={Colors.underlay.primary}
           >
             <View>
               <Icon name="search" />

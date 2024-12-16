@@ -1,14 +1,11 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../../styles";
 
 export const ROW_HEIGHT = 56;
 
 const commonStyles = StyleSheet.create({
-  roundWhiteContainer: {
-    backgroundColor: "white",
-    borderRadius: 28,
-  },
   row: {
-    backgroundColor: "white",
+    backgroundColor: Colors.background.primary,
     maxHeight: ROW_HEIGHT,
     minHeight: ROW_HEIGHT,
     flexDirection: "row",
@@ -35,17 +32,19 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   inputContainer: {
-    ...commonStyles.roundWhiteContainer,
+    backgroundColor: Colors.background.primary,
+    borderRadius: 28,
   },
   searchedInputContainer: {
-    ...commonStyles.roundWhiteContainer,
+    backgroundColor: Colors.background.primary,
+    borderRadius: 28,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     borderBottomColor: "gray",
     borderBottomWidth: 2,
   },
   input: {
-    color: "black",
+    color: Colors.text.primary,
     fontSize: 20,
     marginLeft: 20,
     maxHeight: ROW_HEIGHT,
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   buttonIconContainer: {
-    backgroundColor: "white",
+    backgroundColor: Colors.background.primary,
     borderRadius: 28,
     minWidth: 59,
     maxWidth: 59,
@@ -88,8 +87,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   displayContainer: {
-    ...commonStyles.roundWhiteContainer,
     ...commonStyles.row,
+    backgroundColor: Colors.background.primary,
+    borderRadius: 28,
     justifyContent: "space-between",
     gap: 9,
     flexGrow: 2,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   // Info
   serviceNoContainer: {
-    backgroundColor: "lightgray",
+    backgroundColor: Colors.background.secondary,
     borderRadius: 6,
     paddingHorizontal: 13,
     justifyContent: "center",
