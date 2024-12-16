@@ -1,26 +1,10 @@
-const fetchFromLTA = require('./fetchFromLTA');
+const fetchAllFromLTA = require('./fetchAllFromLTA');
 
 let database = new Map();
 
-const recordsPerRequest = 500;
-
 const fetchBusStops = async function () {
     if (database.size === 0) {
-        let index = 0;
-        let finished = false;
-
-        let results = [];
-        while (!finished) {
-            await fetchFromLTA(`https://datamall2.mytransport.sg/ltaodataservice/BusStops?$skip=${index}`)
-                .then(response => response.json())
-                .then(json => json['value'])
-                .then(records => {
-                    results.push(...records);
-                    index += recordsPerRequest;
-                    finished = records.length <= 0;
-                });
-        }
-
+        let results = await fetchAllFromLTA('https://datamall2.mytransport.sg/ltaodataservice/BusStops');
         for (let busStop of results) {
             database.set(busStop['BusStopCode'], busStop);
         }
