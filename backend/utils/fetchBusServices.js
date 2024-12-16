@@ -7,7 +7,7 @@ const fetchBusServices = async function () {
         let results = await fetchAllFromLTA('https://datamall2.mytransport.sg/ltaodataservice/BusServices');
         for (let busRoute of results) {
             let busNumber = busRoute['ServiceNo'];
-            let busDirection = busRoute['Direction'];
+            let busDirection = busRoute['Direction'].toString();
 
             let busServices = database.get(busNumber) || new Map();
 
