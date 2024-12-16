@@ -1,40 +1,46 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const ROW_HEIGHT = 56;
 
 const commonStyles = StyleSheet.create({
-    inputContainer: {
-        backgroundColor: "white",
-    },
-    result: {
-        backgroundColor: 'white',
-        maxHeight: ROW_HEIGHT,
-        minHeight: ROW_HEIGHT,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flex: 1,
-        padding: 'auto',
-        paddingLeft: 20,
-        paddingRight: 20,
-    },
+  roundWhiteContainer: {
+    backgroundColor: "white",
+    borderRadius: 28,
+  },
+  row: {
+    backgroundColor: "white",
+    maxHeight: ROW_HEIGHT,
+    minHeight: ROW_HEIGHT,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flex: 1,
+    padding: "auto",
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  roadNameContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
 });
 
 const styles = StyleSheet.create({
-  container: {
+  // Search Bar
+  searchBarContainer: {
     backgroundColor: "transparent",
     borderTopWidth: 0,
     borderBottomWidth: 0,
     padding: 0,
   },
   inputContainer: {
-    ...commonStyles.inputContainer,
-    borderRadius: 28,
+    ...commonStyles.roundWhiteContainer,
   },
   searchedInputContainer: {
-    ...commonStyles.inputContainer,
-    borderTopStartRadius: 28,
-    borderTopEndRadius: 28,
+    ...commonStyles.roundWhiteContainer,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
     borderBottomColor: "gray",
     borderBottomWidth: 2,
   },
@@ -50,11 +56,12 @@ const styles = StyleSheet.create({
     marginVertical: 0,
     paddingRight: 0,
   },
+  // Results
   result: {
-    ...commonStyles.result,
+    ...commonStyles.row,
   },
   lastResult: {
-    ...commonStyles.result,
+    ...commonStyles.row,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
   },
@@ -63,6 +70,39 @@ const styles = StyleSheet.create({
     width: "100%",
     fontSize: 14,
   },
+  // Display
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    flex: 1,
+    maxHeight: 59,
+    minHeight: 59,
+    gap: 8,
+  },
+  buttonIconContainer: {
+    backgroundColor: "white",
+    borderRadius: 28,
+    minWidth: 59,
+    maxWidth: 59,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  displayContainer: {
+    ...commonStyles.roundWhiteContainer,
+    ...commonStyles.row,
+    justifyContent: "space-between",
+    gap: 9,
+    flexGrow: 2,
+  },
+  columnContainer: {
+    minWidth: "60%",
+    maxWidth: "60%",
+    flexGrow: 4,
+  },
+  displayRoadNameContainer: {
+    ...commonStyles.roadNameContainer,
+  },
+  // Info
   serviceNoContainer: {
     backgroundColor: "lightgray",
     borderRadius: 6,
@@ -71,17 +111,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   serviceNo: {
-    fontSize: 20,
+    fontSize: 16,
     textAlign: "center",
   },
-  roadNameContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 10,
+  resultRoadNameContainer: {
+    ...commonStyles.roadNameContainer,
     maxWidth: "35%",
   },
   roadName: {
-    fontSize: 14,
+    fontSize: 16,
+    textAlign: "center",
   },
 });
 

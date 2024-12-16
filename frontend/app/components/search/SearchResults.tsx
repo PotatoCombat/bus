@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, TouchableHighlight, View } from "react-native";
 import styles, { ROW_HEIGHT } from "./styles";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
 import { Icon } from "react-native-elements";
@@ -6,8 +6,10 @@ import { noBusesFound } from "@/app/utils/strings";
 
 export default function SearchResults({
   results,
+  setSelectedResult,
 }: {
   results: SearchResultInterface[] | null;
+  setSelectedResult: Function;
 }) {
   return (
     <>
@@ -22,30 +24,38 @@ export default function SearchResults({
               <FlatList
                 data={results}
                 renderItem={({ item, index }) => (
-                  <View
+                  <TouchableHighlight
                     key={item.serviceNo + index}
-                    style={
-                      index < results.length - 1
-                        ? styles.result
-                        : styles.lastResult
-                    }
+                    onPress={() => setSelectedResult(item)}
+                    activeOpacity={0.6}
+                    underlayColor="#EEEEEE"
                   >
-                    <View style={styles.serviceNoContainer}>
-                      <Text style={styles.serviceNo}>{item.serviceNo}</Text>
-                    </View>
+                    <View
+                      style={
+                        index < results.length - 1
+                          ? styles.result
+                          : styles.lastResult
+                      }
+                    >
+                      <View style={styles.serviceNoContainer}>
+                        <Text style={styles.serviceNo}>{item.serviceNo}</Text>
+                      </View>
 
-                    <View style={styles.roadNameContainer}>
-                      <Text style={styles.roadName}>{item.originRoadName}</Text>
-                    </View>
+                      <View style={styles.resultRoadNameContainer}>
+                        <Text style={styles.roadName}>
+                          {item.originRoadName}
+                        </Text>
+                      </View>
 
-                    <Icon name="arrow-right" />
+                      <Icon name="arrow-right" />
 
-                    <View style={styles.roadNameContainer}>
-                      <Text style={styles.roadName}>
-                        {item.destinationRoadName}
-                      </Text>
+                      <View style={styles.resultRoadNameContainer}>
+                        <Text style={styles.roadName}>
+                          {item.destinationRoadName}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
+                  </TouchableHighlight>
                 )}
               />
             </View>
