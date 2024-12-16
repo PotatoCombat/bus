@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { fetchFromLTA } = require('../utils/fetchFromLTA');
+const { fetchFromLTA } = require('../utils');
 
 // Define a function called diff_minutes that calculates the difference in minutes between two Date objects (dt2 and dt1)
 function diff_minutes(dt) 
@@ -24,7 +24,7 @@ function diff_minutes(dt)
 
 router.get('/', async (req, res) => {
     var busStopCode = req.query.BusStopCode;
-    await fetchFromLTA('https://datamall2.mytransport.sg/ltaodataservice/v3/BusArrival?BusStopCode=' + busStopCode)
+    await fetchFromLTA('https://datamall2.mytransport.sg/ltaodataservice/v3/BusArrival', { BusStopCode: busStopCode })
     .then(response => {
         return response.json();
     })
