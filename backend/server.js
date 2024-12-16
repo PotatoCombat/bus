@@ -27,7 +27,8 @@ app.use(async (req, res, next) => {
 });
 
 // Server routes
-app.use('/example', require('./routes/example'));
+app.use('/example-bus-stops', require('./routes/example-bus-stops'));
+app.use('/example-bus-routes', require('./routes/example-bus-routes'));
 app.use('/bus-route', require('./routes/bus-route'));
 app.use('/bus-arrival', require('./routes/bus-arrival'));
 
