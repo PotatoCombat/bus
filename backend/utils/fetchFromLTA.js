@@ -3,11 +3,13 @@ const fetchFromLTA = function (url, params = {}, options = {}) {
         'AccountKey': `${process.env.ACCOUNT_KEY}`,
         ...options.headers,
     };
-    let paramsString = '?';
-    for (let key in params) {
-        paramsString += `${key}=${params[key]}`;
+    let first = true;
+    let result = [];
+    for (let [key, value] of Object.entries(params)) {
+        result.push(`${first ? '?' : '&'}${key}=${params[key]}`);
+        first = false;
     }
-    return fetch(`${url}${paramsString.length <= 1 ? '' : paramsString}`, { ...options, headers });
+    return fetch(`${url}${result.join('')}`, { ...options, headers });
 };
 
 module.exports = fetchFromLTA;
