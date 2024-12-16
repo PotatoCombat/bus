@@ -3,6 +3,7 @@ import styles, { ROW_HEIGHT } from "./styles";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
 import { Icon } from "react-native-elements";
 import { noBusesFound } from "@/app/utils/strings";
+import { Colors } from "@/app/styles";
 
 export default function SearchResults({
   results,
@@ -28,7 +29,7 @@ export default function SearchResults({
                     key={item.serviceNo + index}
                     onPress={() => setSelectedResult(item)}
                     activeOpacity={0.6}
-                    underlayColor="#EEEEEE"
+                    underlayColor={Colors.underlay.primary}
                   >
                     <View
                       style={
