@@ -29,10 +29,14 @@ app.use(async (req, res, next) => {
 // Server routes
 app.use('/example-bus-stops', require('./routes/example-bus-stops'));
 app.use('/example-bus-routes', require('./routes/example-bus-routes'));
+app.use('/ready', require('./routes/ready'));
 app.use('/bus-route', require('./routes/bus-route'));
 app.use('/bus-arrival', require('./routes/bus-arrival'));
 
 // Server ready
-app.listen(process.env.PORT, () => {
-  console.log(`LGBT listening on port ${process.env.PORT}`)
+app.listen(process.env.PORT, async () => {
+  await fetch(`http://localhost:${process.env.PORT}/ready`)
+    .then(response => response.text())
+    .then(text => console.log(`LGBT listening on port ${process.env.PORT}`))
+    .catch(error => console.error(`LGBT failed to start on port ${process.env.PORT}:`, error))
 });
