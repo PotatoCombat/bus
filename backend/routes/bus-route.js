@@ -1,32 +1,16 @@
 const router = require('express').Router();
 
-const { fetchFromLTA } = require('../utils/fetchFromLTA');
-
-let lastResult = undefined;
-let lastTimestamp = new Date();
-
-let timeToLive = 10000;
-
-let data = new Map();
-
 router.get('/', async (req, res) => {
-    if (lastResult && (new Date() - lastTimestamp) < timeToLive) {
-        res.send(lastResult);
-        return;
+    let busRoutes = req.busRoutes.get(req.query.ServiceNo);
+    if (req.query.Direction) {
+        res.send(busRoutes.get(req.query.Direction));
+    } else {
+        let results = [];
+        busRoutes.forEach((busRoute, direction) => {
+            results.push(busRoute);
+        });
+        res.send(results);
     }
-    await fetchFromLTA('https://datamall2.mytransport.sg/ltaodataservice/BusRoutes')
-    .then(response => {
-        lastTimestamp = new Date(response.headers.get('Date'));
-        return response.json();
-    })
-    .then(json => {
-        lastResult = json;
-        res.send(json);
-
-        json.value.forEach(x => {
-            data.get()
-        })
-    });
 });
 
 module.exports = router;
