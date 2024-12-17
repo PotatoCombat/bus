@@ -2,6 +2,8 @@ import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Search from "./components/search/Search";
 import { mockBusRoute } from './utils/mockBusRoute';
+import SearchResultInterface from "./types/SearchResultInterface";
+import { useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +24,15 @@ const styles = StyleSheet.create({
 });
 
 export default function Index() {
+  const [busRoute, setBusRoute] = useState<Array<any>>([]);
+  const updateBusRoute = function (result: SearchResultInterface | null) {
+    if (result?.serviceNo === '86') {
+      setBusRoute(mockBusRoute);
+      return;
+    }
+    setBusRoute([]);
+  }
+
   return (
     <View style={styles.container}>
       <MapView
@@ -33,7 +44,7 @@ export default function Index() {
           longitudeDelta: 0.55,
         }}
       >
-        {mockBusRoute.map(busStop => (
+        {busRoute.map(busStop => (
           <Marker
             key={busStop.BusStopCode}
             coordinate={{latitude: busStop.Latitude, longitude: busStop.Longitude}}
@@ -42,7 +53,7 @@ export default function Index() {
           />
         ))}
       </MapView>
-      <Search style={styles.search} />
+      <Search style={styles.search} onSelectedResult={updateBusRoute}/>
     </View>
   );
 }

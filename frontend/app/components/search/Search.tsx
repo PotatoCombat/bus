@@ -9,7 +9,15 @@ import { searchBarPlaceholderText } from "@/app/utils/strings";
 import SearchResultDisplay from "./SearchResultDisplay";
 import { Colors } from "@/app/styles";
 
-export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
+export default function Search(
+  {
+    style,
+    onSelectedResult
+  }: {
+    style: StyleProp<ViewStyle>,
+    onSelectedResult?: (result: SearchResultInterface | null) => void
+  }
+) {
   const [value, setValue] = useState("");
   const [selectedResult, setSelectedResult] = useState<SearchResultInterface | null>(null);
   const [results, setResults] = useState<SearchResultInterface[] | null>(null);
@@ -25,8 +33,14 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   };
 
   const handleClickSearchButton = () => {
+    onSelectedResult?.(null);
     setSelectedResult(null);
   };
+
+  const handleSelectedResult = function (value: SearchResultInterface | null) {
+    onSelectedResult?.(value);
+    setSelectedResult(value);
+  }
 
   return (
     <View style={style}>
@@ -54,14 +68,14 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
 
           <SearchResults
             results={results}
-            setSelectedResult={setSelectedResult}
+            setSelectedResult={handleSelectedResult}
           />
         </>
       ) : (
         <View style={styles.rowContainer}>
           <SearchResultDisplay
             selectedResult={selectedResult}
-            setSelectedResult={setSelectedResult}
+            setSelectedResult={handleSelectedResult}
           />
 
           <TouchableHighlight
