@@ -32,7 +32,7 @@ export default function SearchResultDisplay({
 
       <View style={styles.columnContainer}>
         <View style={styles.displayRoadNameContainer}>
-          <Text style={styles.displayRoadName}>{selectedResult.originRoadName}</Text>
+          <Text style={styles.displayRoadName} numberOfLines={1}>{selectedResult.originRoadName}</Text>
         </View>
 
         <View>
@@ -43,7 +43,7 @@ export default function SearchResultDisplay({
         </View>
 
         <View style={styles.displayRoadNameContainer}>
-          <Text style={styles.displayRoadName}>{selectedResult.destinationRoadName}</Text>
+          <Text style={styles.displayRoadName} numberOfLines={1}>{selectedResult.destinationRoadName}</Text>
         </View>
       </View>
 
