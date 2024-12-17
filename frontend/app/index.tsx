@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import Search from "./components/search/Search";
+import { mockBusRoute } from './utils/mockBusRoute';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +32,16 @@ export default function Index() {
           latitudeDelta: 0,
           longitudeDelta: 0.55,
         }}
-      />
+      >
+        {mockBusRoute.map(busStop => (
+          <Marker
+            key={busStop.BusStopCode}
+            coordinate={{latitude: busStop.Latitude, longitude: busStop.Longitude}}
+            title={busStop.Description}
+            description={busStop.RoadName}
+          />
+        ))}
+      </MapView>
       <Search style={styles.search} />
     </View>
   );
