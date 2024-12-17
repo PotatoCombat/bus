@@ -44,7 +44,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             onChangeText={changeText}
             value={value}
             clearIcon={{
-              color: "black",
+              color: Colors.neutral.black,
               size: 24,
             }}
             rightIconContainerStyle={styles.rightIconContainer}
@@ -68,7 +68,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             onPress={handleClickSearchButton}
             style={styles.buttonIconContainer}
             activeOpacity={0.6}
-            underlayColor={Colors.underlay.primary}
+            underlayColor={Colors.neutral.s100}
           >
             <View>
               <Icon name="search" />

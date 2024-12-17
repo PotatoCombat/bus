@@ -5,7 +5,7 @@ export const ROW_HEIGHT = 56;
 
 const commonStyles = StyleSheet.create({
   row: {
-    backgroundColor: Colors.background.primary,
+    backgroundColor: Colors.neutral.white,
     maxHeight: ROW_HEIGHT,
     minHeight: ROW_HEIGHT,
     flexDirection: "row",
@@ -26,24 +26,24 @@ const commonStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   // Search Bar
   searchBarContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent.clear,
     borderTopWidth: 0,
     borderBottomWidth: 0,
     padding: 0,
   },
   inputContainer: {
-    backgroundColor: Colors.background.primary,
+    backgroundColor: Colors.neutral.white,
     borderRadius: Outlines.borderRadius.large,
   },
   searchedInputContainer: {
-    backgroundColor: Colors.background.primary,
+    backgroundColor: Colors.neutral.white,
     borderTopStartRadius: Outlines.borderRadius.large,
     borderTopEndRadius: Outlines.borderRadius.large,
-    borderBottomColor: "gray",
+    borderBottomColor: Colors.neutral.s300,
     borderBottomWidth: Outlines.borderWidth.base,
   },
   input: {
-    color: Colors.text.primary,
+    color: Colors.neutral.black,
     fontSize: 20,
     marginLeft: 20,
     maxHeight: ROW_HEIGHT,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   buttonIconContainer: {
-    backgroundColor: Colors.background.primary,
+    backgroundColor: Colors.neutral.white,
     borderRadius: Outlines.borderRadius.large,
     minWidth: 59,
     maxWidth: 59,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   displayContainer: {
     ...commonStyles.row,
-    backgroundColor: Colors.background.primary,
+    backgroundColor: Colors.neutral.white,
     borderRadius: Outlines.borderRadius.large,
     justifyContent: "space-between",
     gap: 9,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   // Info
   serviceNoContainer: {
-    backgroundColor: Colors.background.secondary,
+    backgroundColor: Colors.neutral.s200,
     borderRadius: Outlines.borderRadius.small,
     paddingHorizontal: 13,
     justifyContent: "center",
