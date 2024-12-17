@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors, Outlines } from "../../styles";
+import { Colors, Outlines, Typography } from "../../styles";
 
 export const ROW_HEIGHT = 56;
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: Colors.neutral.black,
-    fontSize: 20,
+    fontSize: Typography.fontSize.x30,
     marginLeft: 20,
     maxHeight: ROW_HEIGHT,
     minHeight: ROW_HEIGHT,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   noResult: {
     textAlign: "center",
     width: "100%",
-    fontSize: 14,
+    fontSize: Typography.fontSize.x10,
   },
   // Display
   rowContainer: {
@@ -101,6 +101,10 @@ const styles = StyleSheet.create({
   displayRoadNameContainer: {
     ...commonStyles.roadNameContainer,
   },
+  displayRoadName: {
+    fontSize: Typography.fontSize.x30,
+    textAlign: "center",
+  },
   // Info
   serviceNoContainer: {
     backgroundColor: Colors.neutral.s200,
@@ -110,7 +114,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   serviceNo: {
-    fontSize: 16,
+    fontSize: Typography.fontSize.x30,
     textAlign: "center",
   },
   resultRoadNameContainer: {
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     maxWidth: "35%",
   },
   roadName: {
-    fontSize: 16,
+    fontSize: Typography.fontSize.x10,
     textAlign: "center",
   },
 });
