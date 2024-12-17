@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../styles";
+import { Colors, Outlines } from "../../styles";
 
 export const ROW_HEIGHT = 56;
 
@@ -33,15 +33,14 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: Colors.background.primary,
-    borderRadius: 28,
+    borderRadius: Outlines.borderRadius.large,
   },
   searchedInputContainer: {
     backgroundColor: Colors.background.primary,
-    borderRadius: 28,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    borderTopStartRadius: Outlines.borderRadius.large,
+    borderTopEndRadius: Outlines.borderRadius.large,
     borderBottomColor: "gray",
-    borderBottomWidth: 2,
+    borderBottomWidth: Outlines.borderWidth.base,
   },
   input: {
     color: Colors.text.primary,
@@ -61,8 +60,8 @@ const styles = StyleSheet.create({
   },
   lastResult: {
     ...commonStyles.row,
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
+    borderBottomLeftRadius: Outlines.borderRadius.large,
+    borderBottomRightRadius: Outlines.borderRadius.large,
   },
   noResult: {
     textAlign: "center",
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
   },
   buttonIconContainer: {
     backgroundColor: Colors.background.primary,
-    borderRadius: 28,
+    borderRadius: Outlines.borderRadius.large,
     minWidth: 59,
     maxWidth: 59,
     justifyContent: "center",
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
   displayContainer: {
     ...commonStyles.row,
     backgroundColor: Colors.background.primary,
-    borderRadius: 28,
+    borderRadius: Outlines.borderRadius.large,
     justifyContent: "space-between",
     gap: 9,
     flexGrow: 2,
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
   // Info
   serviceNoContainer: {
     backgroundColor: Colors.background.secondary,
-    borderRadius: 6,
+    borderRadius: Outlines.borderRadius.small,
     paddingHorizontal: 13,
     justifyContent: "center",
     alignItems: "center",
