@@ -7,7 +7,7 @@ import searchApi from "@/app/services/SearchApi";
 import SearchResults from "./SearchResults";
 import { searchBarPlaceholderText } from "@/app/utils/strings";
 import SearchResultDisplay from "./SearchResultDisplay";
-import { Colors } from "@/app/styles";
+import { Colors, Sizing } from "@/app/styles";
 
 export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   const [value, setValue] = useState("");
@@ -45,7 +45,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             value={value}
             clearIcon={{
               color: Colors.neutral.black,
-              size: 24,
+              size: Sizing.icons.x25,
             }}
             rightIconContainerStyle={styles.rightIconContainer}
             searchIcon={() => {}}
