@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
     justifyContent: "center",
     alignItems: "center",
+    height: 26,
   },
   serviceNo: {
     fontSize: Typography.fontSize.x30,
