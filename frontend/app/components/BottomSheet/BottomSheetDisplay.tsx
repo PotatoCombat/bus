@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -8,22 +8,10 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import ListRow from "./ListRow";
-import { mockBusArrival } from "@/app/utils/mockData";
 
-export default function BottomSheetDisplay({
-  onPress,
-  bottomSheetModalRef,
-}: {
-  onPress: any;
-  bottomSheetModalRef: any;
-}) {
-  const [data, setData] = useState(mockBusArrival);
-  useEffect(() => {
-    console.log("Data updated:", data); // Log the state of the data array
-  }, [data]);
-  const firstItem = data && data.length > 0 ? data[0] : null; // Safely handle empty data array
-  console.log("First Item after refresh:", firstItem); // Log to verify if the first item is being updated correctly
-
+export default function BottomSheetDisplay() {
+  const snapPoints = useMemo(() => ["50%", "70%"], []);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -31,18 +19,7 @@ export default function BottomSheetDisplay({
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
-  const handleRefresh = () => {
-    console.log("Refreshing data...");
-    const refreshedData = [...mockBusArrival]; // For example, just using mock data again
-    console.log("First Item:", firstItem);
-    console.log("Data after refresh:", data);
-    // Set the refreshed data
-    setData(refreshedData);
-    onPress(); // Trigger parent onPress if needed
-  };
-
-  const snapPoints = useMemo(() => ["50%", "70%"], []);
-
+  const data = 123456;
   return (
     <BottomSheetModalProvider>
       <TouchableHighlight onPress={() => {}}>
@@ -63,34 +40,18 @@ export default function BottomSheetDisplay({
         onChange={handleSheetChanges}
       >
         <BottomSheetView style={styles.contentContainer}>
-          <View
-            style={{
-              flexDirection: "row",
-              padding: 8,
-              height: 60,
-              justifyContent: "space-between",
-            }}
-          >
-            <View>
-              {firstItem ? (
-                <>
-                  <Text style={styles.busStopHeader}>
-                    Bus Stop {firstItem.busStopNo}
-                  </Text>
-                </>
-              ) : (
-                <Text>No data available</Text>
-              )}
-            </View>
-
-            <View style={styles.refresh}>
-              <Icon
-                name="refresh"
-                size={30}
-                color="black"
-                onPress={handleRefresh}
-              ></Icon>
-            </View>
+          <View style={{ flexDirection: "row", padding: 8 }}>
+            <Text style={styles.busStopHeader}>Bus Stop {data}</Text>
+            <TouchableHighlight onPress={() => {}}>
+              <View style={styles.refresh}>
+                <Icon
+                  name="refresh"
+                  size={30}
+                  color="black"
+                  onPress={handlePresentModalPress}
+                ></Icon>
+              </View>
+            </TouchableHighlight>
           </View>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.lineStyle}></View>
@@ -101,12 +62,13 @@ export default function BottomSheetDisplay({
       </BottomSheetModal>
     </BottomSheetModalProvider>
   );
+
 }
 
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    justifyContent: "center",
+    alignItems: "center",
   },
   item: {
     flex: 1,
@@ -122,15 +84,13 @@ const styles = StyleSheet.create({
   busStopHeader: {
     fontSize: 30,
     flex: 1,
+    marginRight: "auto",
     paddingLeft: 8,
-    justifyContent: "center",
   },
   refresh: {
     flex: 1,
     paddingRight: 8,
-    alignItems: 'flex-end', // Aligns content (icon) to the right
-    justifyContent: 'center', // Centers the icon vertically
-    
+    justifyContent: "center",
   },
   lineStyle: {
     height: 1,

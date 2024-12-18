@@ -58,8 +58,7 @@ const handleButtonClick = () => {
             }}
           />
           <BottomSheetDisplay 
-              onPress={handleButtonClick}  // Pass button press handler
-              bottomSheetModalRef={bottomSheetModalRef}  // Pass ref to BottomSheet
+               // Pass ref to BottomSheet
             />
           <Search style={styles.search} />
           {loading ? (
