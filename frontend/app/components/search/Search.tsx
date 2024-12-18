@@ -14,14 +14,9 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   const [selectedResult, setSelectedResult] = useState<SearchResultInterface | null>(null);
   const [results, setResults] = useState<SearchResultInterface[] | null>(null);
 
-  const changeText = (text: string) => {
-    setValue(text);
-
-    if (text.length == 0) {
-      setResults(null);
-    } else {
-      setResults(searchApi(text));
-    }
+  const changeText = (text?: string) => {
+      setValue(text ? text : '');
+      setResults(text ? searchApi(text) : null);
   };
 
   const handleClickSearchButton = () => {
