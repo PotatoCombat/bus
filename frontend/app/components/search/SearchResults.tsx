@@ -45,7 +45,7 @@ export default function SearchResults({
                       <View
                         style={{ ...styles.resultRoadNameContainer, flex: 5 }}
                       >
-                        <Text style={styles.roadName}>
+                        <Text style={styles.roadName} numberOfLines={2}>
                           {item.originRoadName}
                         </Text>
                       </View>
@@ -57,7 +57,7 @@ export default function SearchResults({
                       <View
                         style={{ ...styles.resultRoadNameContainer, flex: 5 }}
                       >
-                        <Text style={styles.roadName}>
+                        <Text style={styles.roadName} numberOfLines={2}>
                           {item.destinationRoadName}
                         </Text>
                       </View>
