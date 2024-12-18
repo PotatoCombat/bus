@@ -3,6 +3,7 @@ const router = require('express').Router();
 router.get('/', async (req, res) => {
     let busRoutes = req.busRoutes.get(req.query.ServiceNo);
     if (req.query.Direction) {
+        let busService = req.busServices.get(req.query.ServiceNo, req.query.Direction);
         let stopsOfDirection = busRoutes.get(req.query.Direction);
         let busStops = [];
         stopsOfDirection.forEach(stop =>{
@@ -12,23 +13,26 @@ router.get('/', async (req, res) => {
         res.send({
             ServiceNo : req.query.ServiceNo,
             Routes : [{
-                OriginCode : stopsOfDirection[0].BusStopCode,
-                DestinationCode : stopsOfDirection[stopsOfDirection.length-1].BusStopCode,
+                OriginCode : busService.OriginCode,
+                DestinationCode : busService.DestinationCode,
                 BusStops : busStops
             }]
         });
     } else {
         let routes = [];
+        let direction = 1;
         busRoutes.forEach(route => {
             let busStops = [];
+            let busService = req.busServices.get(req.query.ServiceNo, req.query.Direction);
             route.forEach(stop => {
                 busStops.push(stop.BusStopCode);
             });
             routes.push({
-                OriginCode : route[0].BusStopCode,
-                DestinationCode : route[route.length-1].BusStopCode,
+                OriginCode : busService.OriginCode,
+                DestinationCode : busService.DestinationCode,
                 BusStops : busStops
             });
+            direction++;
         });
         res.send({
             ServiceNo : req.query.ServiceNo,
