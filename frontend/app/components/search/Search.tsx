@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleProp, TouchableHighlight, View, ViewStyle } from "react-native";
+import { Platform, StyleProp, TouchableHighlight, View, ViewStyle } from "react-native";
 import { Icon, SearchBar } from "react-native-elements";
 import styles from "./styles";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
@@ -44,7 +44,8 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             onChangeText={changeText}
             value={value}
             clearIcon={{
-              color: Colors.neutral.black,
+              name: (Platform.OS === 'android') ? 'clear' : 'close-circle',
+              color: "rgba(0, 0, 0, 255)",
               size: Sizing.icons.x25,
             }}
             rightIconContainerStyle={styles.rightIconContainer}
