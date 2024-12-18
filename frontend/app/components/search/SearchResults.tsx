@@ -29,7 +29,7 @@ export default function SearchResults({
                     key={item.serviceNo + index}
                     onPress={() => setSelectedResult(item)}
                     activeOpacity={0.6}
-                    underlayColor={Colors.underlay.primary}
+                    underlayColor={Colors.neutral.s100}
                   >
                     <View
                       style={

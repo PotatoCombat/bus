@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../styles";
+import { Colors, Outlines, Typography } from "../../styles";
 
 export const ROW_HEIGHT = 56;
 
 const commonStyles = StyleSheet.create({
   row: {
-    backgroundColor: Colors.background.primary,
+    backgroundColor: Colors.neutral.white,
     maxHeight: ROW_HEIGHT,
     minHeight: ROW_HEIGHT,
     flexDirection: "row",
@@ -26,26 +26,25 @@ const commonStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   // Search Bar
   searchBarContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent.clear,
     borderTopWidth: 0,
     borderBottomWidth: 0,
     padding: 0,
   },
   inputContainer: {
-    backgroundColor: Colors.background.primary,
-    borderRadius: 28,
+    backgroundColor: Colors.neutral.white,
+    borderRadius: Outlines.borderRadius.large,
   },
   searchedInputContainer: {
-    backgroundColor: Colors.background.primary,
-    borderRadius: 28,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderBottomColor: "gray",
-    borderBottomWidth: 2,
+    backgroundColor: Colors.neutral.white,
+    borderTopStartRadius: Outlines.borderRadius.large,
+    borderTopEndRadius: Outlines.borderRadius.large,
+    borderBottomColor: Colors.neutral.s300,
+    borderBottomWidth: Outlines.borderWidth.base,
   },
   input: {
-    color: Colors.text.primary,
-    fontSize: 20,
+    color: Colors.neutral.black,
+    fontSize: Typography.fontSize.x30,
     marginLeft: 20,
     maxHeight: ROW_HEIGHT,
     minHeight: ROW_HEIGHT,
@@ -61,13 +60,13 @@ const styles = StyleSheet.create({
   },
   lastResult: {
     ...commonStyles.row,
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
+    borderBottomLeftRadius: Outlines.borderRadius.large,
+    borderBottomRightRadius: Outlines.borderRadius.large,
   },
   noResult: {
     textAlign: "center",
     width: "100%",
-    fontSize: 14,
+    fontSize: Typography.fontSize.x10,
   },
   // Display
   rowContainer: {
@@ -79,8 +78,8 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   buttonIconContainer: {
-    backgroundColor: Colors.background.primary,
-    borderRadius: 28,
+    backgroundColor: Colors.neutral.white,
+    borderRadius: Outlines.borderRadius.large,
     minWidth: 59,
     maxWidth: 59,
     justifyContent: "center",
@@ -88,8 +87,8 @@ const styles = StyleSheet.create({
   },
   displayContainer: {
     ...commonStyles.row,
-    backgroundColor: Colors.background.primary,
-    borderRadius: 28,
+    backgroundColor: Colors.neutral.white,
+    borderRadius: Outlines.borderRadius.large,
     justifyContent: "space-between",
     gap: 9,
     flexGrow: 2,
@@ -102,16 +101,21 @@ const styles = StyleSheet.create({
   displayRoadNameContainer: {
     ...commonStyles.roadNameContainer,
   },
+  displayRoadName: {
+    fontSize: Typography.fontSize.x30,
+    textAlign: "center",
+  },
   // Info
   serviceNoContainer: {
-    backgroundColor: Colors.background.secondary,
-    borderRadius: 6,
+    backgroundColor: Colors.neutral.s200,
+    borderRadius: Outlines.borderRadius.small,
     paddingHorizontal: 13,
     justifyContent: "center",
     alignItems: "center",
+    height: 26,
   },
   serviceNo: {
-    fontSize: 16,
+    fontSize: Typography.fontSize.x30,
     textAlign: "center",
   },
   resultRoadNameContainer: {
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
     maxWidth: "35%",
   },
   roadName: {
-    fontSize: 16,
+    fontSize: Typography.fontSize.x10,
     textAlign: "center",
   },
 });

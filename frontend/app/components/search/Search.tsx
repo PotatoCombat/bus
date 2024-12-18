@@ -7,7 +7,7 @@ import searchApi from "@/app/services/SearchApi";
 import SearchResults from "./SearchResults";
 import { searchBarPlaceholderText } from "@/app/utils/strings";
 import SearchResultDisplay from "./SearchResultDisplay";
-import { Colors } from "@/app/styles";
+import { Colors, Sizing } from "@/app/styles";
 
 export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   const [value, setValue] = useState("");
@@ -44,8 +44,8 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             onChangeText={changeText}
             value={value}
             clearIcon={{
-              color: "black",
-              size: 24,
+              color: Colors.neutral.black,
+              size: Sizing.icons.x25,
             }}
             rightIconContainerStyle={styles.rightIconContainer}
             searchIcon={() => {}}
@@ -68,7 +68,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             onPress={handleClickSearchButton}
             style={styles.buttonIconContainer}
             activeOpacity={0.6}
-            underlayColor={Colors.underlay.primary}
+            underlayColor={Colors.neutral.s100}
           >
             <View>
               <Icon name="search" />
