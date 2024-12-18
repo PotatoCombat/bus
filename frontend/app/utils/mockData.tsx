@@ -10,3 +10,21 @@ export const mockSearchResults = [
     destinationRoadName: "D Yio Chu Kang Interchange",
   },
 ];
+
+export const mockBusArrival = [
+  {
+    serviceNo: "88",
+    busStopNo: "123456",
+    bus1: 3,
+    bus2: 5,
+    bus3: 8,
+
+  },
+  {
+    serviceNo: "100",
+    busStopNo: "345612",
+    bus1: 9,
+    bus2: 19,
+    bus3: 21,
+  },
+]
