@@ -14,11 +14,10 @@ export const mockSearchResults = [
 export const mockBusArrival = [
   {
     serviceNo: "88",
-    busStopNo: "123456",
+    busStopNo: "456789",
     bus1: 3,
     bus2: 5,
     bus3: 8,
-
   },
   {
     serviceNo: "100",
@@ -27,4 +26,4 @@ export const mockBusArrival = [
     bus2: 19,
     bus3: 21,
   },
-]
+];
