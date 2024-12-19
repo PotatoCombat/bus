@@ -8,6 +8,7 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import ListRow from "./ListRow";
+import { mockBusArrival } from "@/app/utils/mockData";
 
 export default function BottomSheetDisplay() {
   const snapPoints = useMemo(() => ["50%", "70%"], []);
@@ -19,7 +20,8 @@ export default function BottomSheetDisplay() {
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
-  const data = 123456;
+  const firstItem = mockBusArrival.length > 0 ? mockBusArrival[0] : null;
+
   return (
     <BottomSheetModalProvider>
       <TouchableHighlight onPress={() => {}}>
@@ -40,8 +42,19 @@ export default function BottomSheetDisplay() {
         onChange={handleSheetChanges}
       >
         <BottomSheetView style={styles.contentContainer}>
-          <View style={{ flexDirection: "row", padding: 8 }}>
-            <Text style={styles.busStopHeader}>Bus Stop {data}</Text>
+          <View style={{ flexDirection: "row", padding: 8, justifyContent:'space-between' }}>
+            <View>
+              {firstItem ? (
+                <>
+                  <Text style={styles.busStopHeader}>
+                    Bus Stop {firstItem.busStopNo}
+                  </Text>
+                </>
+              ) : (
+                <Text>No data available</Text>
+              )}
+            </View>
+
             <TouchableHighlight onPress={() => {}}>
               <View style={styles.refresh}>
                 <Icon
@@ -68,7 +81,7 @@ export default function BottomSheetDisplay() {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    alignItems: "center",
+    justifyContent:'center',
   },
   item: {
     flex: 1,
@@ -84,13 +97,13 @@ const styles = StyleSheet.create({
   busStopHeader: {
     fontSize: 30,
     flex: 1,
-    marginRight: "auto",
     paddingLeft: 8,
+	justifyContent:'center',
   },
   refresh: {
     flex: 1,
     paddingRight: 8,
-    justifyContent: "center",
+	justifyContent:'center'
   },
   lineStyle: {
     height: 1,
