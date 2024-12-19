@@ -6,7 +6,8 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "jsx": "react-jsx"  // or "react-jsxdev"
   },
   "include": [
     "**/*.ts",
