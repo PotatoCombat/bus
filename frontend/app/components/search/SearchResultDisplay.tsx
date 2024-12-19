@@ -8,18 +8,17 @@ import {
 import styles from "./styles";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
 import { Icon } from "react-native-elements";
-import { useState } from "react";
 import { Colors } from "@/app/styles";
-import RoadNamesModal from "../modals/RoadNamesModal";
 
 export default function SearchResultDisplay({
   selectedResult,
   setSelectedResult,
+  openModal,
 }: {
   selectedResult: SearchResultInterface;
   setSelectedResult: Function;
+  openModal: Function;
 }) {
-  const [modalVisible, setModalVisible] = useState(false);
 
   const handleClickSwitchButton = () => {
     setSelectedResult((prev: SearchResultInterface | null) => {
@@ -43,7 +42,7 @@ export default function SearchResultDisplay({
         </View>
 
         <TouchableHighlight
-          onPress={() => setModalVisible(true)}
+          onPress={() => openModal()}
           activeOpacity={0.6}
           underlayColor={Colors.neutral.s100}
           style={styles.columnContainer}
@@ -83,13 +82,6 @@ export default function SearchResultDisplay({
           </View>
         </TouchableOpacity>
       </View>
-
-      <RoadNamesModal
-        visible={modalVisible}
-        closeModal={() => setModalVisible(false)}
-        originRoadName={selectedResult.originRoadName}
-        destinationRoadName={selectedResult.destinationRoadName}
-      />
     </>
   );
 }

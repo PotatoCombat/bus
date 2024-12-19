@@ -126,6 +126,12 @@ const styles = StyleSheet.create({
     fontSize: Typography.fontSize.x10,
     textAlign: "center",
   },
+  // Modal
+  modalBackground: {
+    backgroundColor: Colors.transparent.gray,
+    height: "100%",
+    width: "100%",
+  },
 });
 
 export default styles;
