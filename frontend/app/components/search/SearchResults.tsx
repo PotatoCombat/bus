@@ -4,6 +4,7 @@ import SearchResultInterface from "@/app/types/SearchResultInterface";
 import { Icon } from "react-native-elements";
 import { noBusesFound } from "@/app/utils/strings";
 import { Colors } from "@/app/styles";
+import React from "react";
 
 export default function SearchResults({
   results,
