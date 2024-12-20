@@ -17,7 +17,7 @@ export const mockBusArrival = [
     busStopNo: "456789",
     bus1: 3,
     bus2: 5,
-    bus3: 8,
+    bus3: -1,
   },
   {
     serviceNo: "100",
