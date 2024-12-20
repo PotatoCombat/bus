@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 });
 
 // Function to simulate loading
+// Function to simulate loading
 export default function Index() {
   
 const [loading, setLoading] = useState(false);
@@ -58,7 +59,8 @@ const handleButtonClick = () => {
             }}
           />
           <BottomSheetDisplay 
-               // Pass ref to BottomSheet
+              onPress={handleButtonClick}  // Pass button press handler
+              bottomSheetModalRef={bottomSheetModalRef}  // Pass ref to BottomSheet
             />
           <Search style={styles.search} />
           {loading ? (

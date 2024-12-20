@@ -1,4 +1,11 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, {
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -10,9 +17,14 @@ import {
 import ListRow from "./ListRow";
 import { mockBusArrival } from "@/app/utils/mockData";
 
-export default function BottomSheetDisplay() {
-  const snapPoints = useMemo(() => ["50%", "70%"], []);
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+export default function BottomSheetDisplay({ onPress, bottomSheetModalRef }: {onPress: any, bottomSheetModalRef: any }) {
+  const [data, setData] = useState(mockBusArrival);
+  useEffect(() => {
+    console.log("Data updated:", data); // Log the state of the data array
+  }, [data]);
+  const firstItem = data && data.length > 0 ? data[0] : null; // Safely handle empty data array
+  console.log("First Item after refresh:", firstItem); // Log to verify if the first item is being updated correctly
+
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -20,7 +32,17 @@ export default function BottomSheetDisplay() {
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
-  const firstItem = mockBusArrival.length > 0 ? mockBusArrival[0] : null;
+  const handleRefresh = () => {
+    console.log("Refreshing data...");
+    const refreshedData = [...mockBusArrival]; // For example, just using mock data again
+    console.log("First Item:", firstItem);
+    console.log("Data after refresh:", data);
+    // Set the refreshed data
+    setData(refreshedData);
+    onPress(); // Trigger parent onPress if needed
+  };
+
+  const snapPoints = useMemo(() => ["50%", "70%"], []);
 
   return (
     <BottomSheetModalProvider>
@@ -42,7 +64,16 @@ export default function BottomSheetDisplay() {
         onChange={handleSheetChanges}
       >
         <BottomSheetView style={styles.contentContainer}>
-          <View style={{ flexDirection: "row", padding: 8, justifyContent:'space-between' }}>
+          <View
+            style={{
+             
+              flexDirection: "row",
+              padding: 8,
+              height: 60,
+              
+              justifyContent: "space-between",
+            }}
+          >
             <View>
               {firstItem ? (
                 <>
@@ -54,17 +85,18 @@ export default function BottomSheetDisplay() {
                 <Text>No data available</Text>
               )}
             </View>
-
-            <TouchableHighlight onPress={() => {}}>
-              <View style={styles.refresh}>
-                <Icon
-                  name="refresh"
-                  size={30}
-                  color="black"
-                  onPress={handlePresentModalPress}
-                ></Icon>
-              </View>
-            </TouchableHighlight>
+            
+              <TouchableHighlight onPress={handleRefresh}>
+                <View style={styles.refresh}>
+                  <Icon
+                    name="refresh"
+                    size={30}
+                    color="black"
+                    // onPress={onPress}
+                  ></Icon>
+                </View>
+              </TouchableHighlight>
+            
           </View>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.lineStyle}></View>
@@ -81,7 +113,7 @@ export default function BottomSheetDisplay() {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    justifyContent:'center',
+    justifyContent: "center",
   },
   item: {
     flex: 1,
@@ -98,12 +130,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     flex: 1,
     paddingLeft: 8,
-	justifyContent:'center',
+    justifyContent: "center",
   },
   refresh: {
     flex: 1,
     paddingRight: 8,
-	justifyContent:'center'
+    
+    justifyContent: "center",
   },
   lineStyle: {
     height: 1,
