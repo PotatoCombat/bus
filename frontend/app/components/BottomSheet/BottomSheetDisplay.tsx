@@ -68,7 +68,6 @@ export default function BottomSheetDisplay({
               flexDirection: "row",
               padding: 8,
               height: 60,
-
               justifyContent: "space-between",
             }}
           >
@@ -84,16 +83,14 @@ export default function BottomSheetDisplay({
               )}
             </View>
 
-            <TouchableHighlight onPress={handleRefresh}>
-              <View style={styles.refresh}>
-                <Icon
-                  name="refresh"
-                  size={30}
-                  color="black"
-                  // onPress={onPress}
-                ></Icon>
-              </View>
-            </TouchableHighlight>
+            <View style={styles.refresh}>
+              <Icon
+                name="refresh"
+                size={30}
+                color="black"
+                onPress={handleRefresh}
+              ></Icon>
+            </View>
           </View>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.lineStyle}></View>
@@ -132,8 +129,9 @@ const styles = StyleSheet.create({
   refresh: {
     flex: 1,
     paddingRight: 8,
-
-    justifyContent: "center",
+    alignItems: 'flex-end', // Aligns content (icon) to the right
+    justifyContent: 'center', // Centers the icon vertically
+    
   },
   lineStyle: {
     height: 1,
