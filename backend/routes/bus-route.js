@@ -16,19 +16,14 @@ router.get('/', async (req, res) => {
         });
     } else {
         let routes = [];
-        let direction = 1;
-        busRoutes.forEach(route => {
-            let busStops = [];
-            let busService = req.busServices.get(req.query.ServiceNo.toString()).get(direction.toString());
-            route.forEach(stop => {
-                busStops.push(stop.BusStopCode);
-            });
+        busRoutes.forEach((element, key, value) => {
+            let busService = req.busServices.get(req.query.ServiceNo.toString()).get(key.toString());
+            let busStops = element.map((x) =>x.BusStopCode);
             routes.push({
                 OriginCode : busService.OriginCode,
                 DestinationCode : busService.DestinationCode,
                 BusStops : busStops
             });
-            direction++;
         });
         res.send({
             ServiceNo : req.query.ServiceNo,

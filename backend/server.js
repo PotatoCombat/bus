@@ -32,8 +32,8 @@ app.use('/example-bus-routes', require('./routes/example-bus-routes'));
 app.use('/example-bus-services', require('./routes/example-bus-services'));
 app.use('/example-bus-stops', require('./routes/example-bus-stops'));
 app.use('/ready', require('./routes/ready'));
-app.use('/bus-route', require('./routes/bus-route'));
-app.use('/bus-arrival', require('./routes/bus-arrival'));
+app.use('/BusRoute', require('./routes/bus-route'));
+app.use('/BusArrival', require('./routes/bus-arrival'));
 
 // Server ready
 app.listen(process.env.PORT, async () => {
