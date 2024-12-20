@@ -8,4 +8,5 @@ export const neutral = {
 
 export const transparent = {
   clear: "rgba(255, 255, 255, 0)",
+  gray: "rgba(0, 0, 0, 0.5)",
 };
