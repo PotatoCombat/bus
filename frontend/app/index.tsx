@@ -27,6 +27,7 @@ export default function Index() {
   const [busRoute, setBusRoute] = useState<Array<any>>([]);
   const [selectedBusStop, setSelectedBusStop] = useState<string>('');
 
+  // TODO: Replace with actual API to get busRoute
   const updateBusRoute = function (result: SearchResultInterface | null) {
     if (result?.serviceNo === '88') {
       setBusRoute(mockBusRoute);
@@ -35,10 +36,12 @@ export default function Index() {
     setBusRoute([]);
   }
 
+  // TODO: Open bus stop timings
   const selectBusStop = function(busStopCode: string) {
     setSelectedBusStop(busStopCode);
   }
 
+  // TODO: Close bus stop timings
   const deselectBusStop = function(busStopCode: string) {
     setSelectedBusStop('');
   }
