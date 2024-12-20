@@ -8,11 +8,14 @@ import SearchResults from "./SearchResults";
 import { searchBarPlaceholderText } from "@/app/utils/strings";
 import SearchResultDisplay from "./SearchResultDisplay";
 import { Colors, Sizing } from "@/app/styles";
+import RoadNamesModal from "../modals/RoadNamesModal";
 
 export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   const [value, setValue] = useState("");
-  const [selectedResult, setSelectedResult] = useState<SearchResultInterface | null>(null);
+  const [selectedResult, setSelectedResult] =
+    useState<SearchResultInterface | null>(null);
   const [results, setResults] = useState<SearchResultInterface[] | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const changeText = (text: string) => {
     setValue(text);
@@ -29,53 +32,67 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   };
 
   return (
-    <View style={style}>
-      {selectedResult == null ? (
-        <>
-          <SearchBar
-            containerStyle={styles.searchBarContainer}
-            inputContainerStyle={
-              results != null
-                ? styles.searchedInputContainer
-                : styles.inputContainer
-            }
-            inputStyle={styles.input}
-            placeholder={searchBarPlaceholderText}
-            onChangeText={changeText}
-            value={value}
-            clearIcon={{
-              color: Colors.neutral.black,
-              size: Sizing.icons.x25,
-            }}
-            rightIconContainerStyle={styles.rightIconContainer}
-            searchIcon={() => {}}
-            lightTheme={true}
-          />
+    <>
+      <View style={style}>
+        {selectedResult == null ? (
+          <>
+            <SearchBar
+              containerStyle={styles.searchBarContainer}
+              inputContainerStyle={
+                results != null
+                  ? styles.searchedInputContainer
+                  : styles.inputContainer
+              }
+              inputStyle={styles.input}
+              placeholder={searchBarPlaceholderText}
+              onChangeText={changeText}
+              value={value}
+              clearIcon={{
+                color: Colors.neutral.black,
+                size: Sizing.icons.x25,
+              }}
+              rightIconContainerStyle={styles.rightIconContainer}
+              searchIcon={() => {}}
+              lightTheme={true}
+            />
 
-          <SearchResults
-            results={results}
-            setSelectedResult={setSelectedResult}
-          />
-        </>
-      ) : (
-        <View style={styles.rowContainer}>
-          <SearchResultDisplay
-            selectedResult={selectedResult}
-            setSelectedResult={setSelectedResult}
-          />
+            <SearchResults
+              results={results}
+              setSelectedResult={setSelectedResult}
+            />
+          </>
+        ) : (
+          <>
+            <View style={styles.rowContainer}>
+              <SearchResultDisplay
+                selectedResult={selectedResult}
+                setSelectedResult={setSelectedResult}
+                openModal={() => setModalVisible(true)}
+              />
 
-          <TouchableHighlight
-            onPress={handleClickSearchButton}
-            style={styles.buttonIconContainer}
-            activeOpacity={0.6}
-            underlayColor={Colors.neutral.s100}
-          >
-            <View>
-              <Icon name="search" />
+              <TouchableHighlight
+                onPress={handleClickSearchButton}
+                style={styles.buttonIconContainer}
+                activeOpacity={0.6}
+                underlayColor={Colors.neutral.s100}
+              >
+                <View>
+                  <Icon name="search" />
+                </View>
+              </TouchableHighlight>
             </View>
-          </TouchableHighlight>
-        </View>
-      )}
-    </View>
+          </>
+        )}
+      </View>
+
+      {modalVisible && <View style={styles.modalBackground} />}
+
+      <RoadNamesModal
+        visible={modalVisible}
+        closeModal={() => setModalVisible(false)}
+        originRoadName={selectedResult?.originRoadName}
+        destinationRoadName={selectedResult?.destinationRoadName}
+      />
+    </>
   );
 }
