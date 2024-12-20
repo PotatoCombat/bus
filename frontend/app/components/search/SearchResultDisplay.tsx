@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { Colors } from "@/app/styles";
 
 export default function SearchResultDisplay({

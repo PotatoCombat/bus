@@ -1,7 +1,7 @@
 import { FlatList, Text, TouchableHighlight, View } from "react-native";
 import styles, { ROW_HEIGHT } from "./styles";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { noBusesFound } from "@/app/utils/strings";
 import { Colors } from "@/app/styles";
 

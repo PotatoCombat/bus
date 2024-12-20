@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleProp, TouchableHighlight, View, ViewStyle } from "react-native";
-import { Icon, SearchBar } from "react-native-elements";
+import { Icon, SearchBar } from "@rneui/themed";
 import styles from "./styles";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
 import searchApi from "@/app/services/SearchApi";
@@ -52,7 +52,6 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
                 size: Sizing.icons.x25,
               }}
               rightIconContainerStyle={styles.rightIconContainer}
-              searchIcon={() => {}}
               lightTheme={true}
             />
 
