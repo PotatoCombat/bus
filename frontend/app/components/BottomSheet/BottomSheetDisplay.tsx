@@ -1,11 +1,4 @@
-import React, {
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -17,7 +10,13 @@ import {
 import ListRow from "./ListRow";
 import { mockBusArrival } from "@/app/utils/mockData";
 
-export default function BottomSheetDisplay({ onPress, bottomSheetModalRef }: {onPress: any, bottomSheetModalRef: any }) {
+export default function BottomSheetDisplay({
+  onPress,
+  bottomSheetModalRef,
+}: {
+  onPress: any;
+  bottomSheetModalRef: any;
+}) {
   const [data, setData] = useState(mockBusArrival);
   useEffect(() => {
     console.log("Data updated:", data); // Log the state of the data array
@@ -66,11 +65,10 @@ export default function BottomSheetDisplay({ onPress, bottomSheetModalRef }: {on
         <BottomSheetView style={styles.contentContainer}>
           <View
             style={{
-             
               flexDirection: "row",
               padding: 8,
               height: 60,
-              
+
               justifyContent: "space-between",
             }}
           >
@@ -85,18 +83,17 @@ export default function BottomSheetDisplay({ onPress, bottomSheetModalRef }: {on
                 <Text>No data available</Text>
               )}
             </View>
-            
-              <TouchableHighlight onPress={handleRefresh}>
-                <View style={styles.refresh}>
-                  <Icon
-                    name="refresh"
-                    size={30}
-                    color="black"
-                    // onPress={onPress}
-                  ></Icon>
-                </View>
-              </TouchableHighlight>
-            
+
+            <TouchableHighlight onPress={handleRefresh}>
+              <View style={styles.refresh}>
+                <Icon
+                  name="refresh"
+                  size={30}
+                  color="black"
+                  // onPress={onPress}
+                ></Icon>
+              </View>
+            </TouchableHighlight>
           </View>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.lineStyle}></View>
@@ -135,7 +132,7 @@ const styles = StyleSheet.create({
   refresh: {
     flex: 1,
     paddingRight: 8,
-    
+
     justifyContent: "center",
   },
   lineStyle: {

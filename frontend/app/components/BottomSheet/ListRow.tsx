@@ -43,31 +43,7 @@ const Item = ({ serviceNo }: { serviceNo: any }) => (
   </View>
 );
 
-const EmptyBus = ({ mockBusArrival }: { mockBusArrival: any }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{mockBusArrival.bus1}</Text>
-  </View>
-);
-
-// Check if the id of the first item is -1
-const hasInvalidItem3 = mockBusArrival.some((item) => item.bus3 === -1);
-
-
-
 export default function ListRow() {
-    // const renderItem = ({ item }) => {
-    //     return (
-    //       <View>
-    //         {item.bus3 === "-1" ? (
-    //           // If name or description is "-1", show an error message
-    //           <View style={styles.triangleCorner1}></View>
-    //         ) : (
-    //           // For other items, show their name and description
-                
-    //         )}
-    //       </View>
-    //     );
-    //   };
   return (
     <View style={{ flex: 1, flexDirection: "row" }}>
       <FlatList
@@ -77,13 +53,29 @@ export default function ListRow() {
             <Item serviceNo={item.bus1} />
             <Text style={styles.blank}></Text>
             <View style={styles.arrival}>
-              <Text style={styles.arrivalText}>{item.bus1}</Text>
+              {item.bus1 === -1 ? (
+                // If any item has id -1, show an error message
+                <View style={styles.triangleCorner1}></View>
+              ) : // Otherwise, render the list or first item as usual
+              mockBusArrival.length > 0 ? (
+                <Text style={styles.arrivalText}>{item.bus1}</Text>
+              ) : (
+                <Text>No data available</Text>
+              )}
             </View>
             <View style={styles.arrival}>
-              <Text style={styles.arrivalText}>{item.bus2}</Text>
+              {item.bus2 === -1 ? (
+                // If any item has id -1, show an error message
+                <View style={styles.triangleCorner1}></View>
+              ) : // Otherwise, render the list or first item as usual
+              mockBusArrival.length > 0 ? (
+                <Text style={styles.arrivalText}>{item.bus2}</Text>
+              ) : (
+                <Text>No data available</Text>
+              )}
             </View>
             <View style={styles.arrival}>
-              {hasInvalidItem3 ? (
+              {item.bus3 === -1 ? (
                 // If any item has id -1, show an error message
                 <View style={styles.triangleCorner1}></View>
               ) : // Otherwise, render the list or first item as usual
@@ -93,9 +85,6 @@ export default function ListRow() {
                 <Text>No data available</Text>
               )}
             </View>
-            {/* <View style={styles.arrival}>
-              <Text style={styles.arrivalText}>{item.bus3}</Text>
-            </View> */}
           </View>
         )}
         keyExtractor={(item) => item.busStopNo}
