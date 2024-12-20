@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import Search from "./components/search/Search";
 import { mockBusRoute } from './utils/mockBusRoute';
 import SearchResultInterface from "./types/SearchResultInterface";
@@ -23,10 +23,32 @@ const styles = StyleSheet.create({
   }
 });
 
+const icon = () => {
+  return(
+    <Svg 
+      height = {20}
+      width = {20}
+    >
+    <Ellipse
+      cx="10"
+      cy="10"
+      rx="10"
+      ry="10"
+      fill="blue"
+      stroke="#fff"
+      strokeWidth="2"
+    />
+    </Svg>
+
+    )
+}
+
 export default function Index() {
   const [busRoute, setBusRoute] = useState<Array<any>>([]);
+  const [selectedBusStop, setSelectedBusStop] = useState<string>('');
+
   const updateBusRoute = function (result: SearchResultInterface | null) {
-    if (result?.serviceNo === '86') {
+    if (result?.serviceNo === '88') {
       setBusRoute(mockBusRoute);
       return;
     }
@@ -50,8 +72,18 @@ export default function Index() {
             coordinate={{latitude: busStop.Latitude, longitude: busStop.Longitude}}
             title={busStop.Description}
             description={busStop.RoadName}
-          />
+            image={selectedBusStop === busStop.BusStopCode ? require('../assets/images/circle-purple.png') : require('../assets/images/circle-red.png')}
+            anchor={{x: 0.5, y: 0.5}}
+            onSelect={() => setSelectedBusStop(busStop.BusStopCode)}
+            onDeselect={() => setSelectedBusStop('')}
+          >
+          </Marker>
         ))}
+        <Polyline
+          coordinates={busRoute.map(busStop => ({latitude: busStop.Latitude, longitude: busStop.Longitude}))}
+          strokeColor="#AA0000" // fallback for when `strokeColors` is not supported by the map-provider}
+          strokeWidth={6}
+        />
       </MapView>
       <Search style={styles.search} onSelectedResult={updateBusRoute}/>
     </View>
