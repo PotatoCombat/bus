@@ -23,26 +23,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const icon = () => {
-  return(
-    <Svg 
-      height = {20}
-      width = {20}
-    >
-    <Ellipse
-      cx="10"
-      cy="10"
-      rx="10"
-      ry="10"
-      fill="blue"
-      stroke="#fff"
-      strokeWidth="2"
-    />
-    </Svg>
-
-    )
-}
-
 export default function Index() {
   const [busRoute, setBusRoute] = useState<Array<any>>([]);
   const [selectedBusStop, setSelectedBusStop] = useState<string>('');
@@ -66,6 +46,13 @@ export default function Index() {
           longitudeDelta: 0.55,
         }}
       >
+        {busRoute.at(-1) &&
+          <Marker
+            key={busRoute.at(-1).BusStopCode}
+            coordinate={{latitude: busRoute.at(-1).Latitude, longitude: busRoute.at(-1).Longitude}}
+            tappable={false}
+          />
+        }
         {busRoute.map(busStop => (
           <Marker
             key={busStop.BusStopCode}
