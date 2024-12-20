@@ -35,6 +35,14 @@ export default function Index() {
     setBusRoute([]);
   }
 
+  const selectBusStop = function(busStopCode: string) {
+    setSelectedBusStop(busStopCode);
+  }
+
+  const deselectBusStop = function(busStopCode: string) {
+    setSelectedBusStop('');
+  }
+
   return (
     <View style={styles.container}>
       <MapView
@@ -59,16 +67,20 @@ export default function Index() {
             coordinate={{latitude: busStop.Latitude, longitude: busStop.Longitude}}
             title={busStop.Description}
             description={busStop.RoadName}
-            image={selectedBusStop === busStop.BusStopCode ? require('../assets/images/circle-purple.png') : require('../assets/images/circle-red.png')}
+            image={
+              (selectedBusStop === busStop.BusStopCode)
+                ? require('../assets/images/circle-purple.png')
+                : require('../assets/images/circle-red.png')
+            }
             anchor={{x: 0.5, y: 0.5}}
-            onSelect={() => setSelectedBusStop(busStop.BusStopCode)}
-            onDeselect={() => setSelectedBusStop('')}
+            onSelect={() => selectBusStop(busStop.BusStopCode)}
+            onDeselect={() => deselectBusStop(busStop.BusStopCode)}
           >
           </Marker>
         ))}
         <Polyline
           coordinates={busRoute.map(busStop => ({latitude: busStop.Latitude, longitude: busStop.Longitude}))}
-          strokeColor="#AA0000" // fallback for when `strokeColors` is not supported by the map-provider}
+          strokeColor="#AA0000"
           strokeWidth={6}
         />
       </MapView>
