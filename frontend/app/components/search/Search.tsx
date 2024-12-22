@@ -10,7 +10,15 @@ import SearchResultDisplay from "./SearchResultDisplay";
 import { Colors, Sizing } from "@/app/styles";
 import RoadNamesModal from "../modals/RoadNamesModal";
 
-export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
+export default function Search(
+  {
+    style,
+    onSelectedResult
+  }: {
+    style: StyleProp<ViewStyle>,
+    onSelectedResult?: (result: SearchResultInterface | null) => void
+  }
+) {
   const [value, setValue] = useState("");
   const [selectedResult, setSelectedResult] =
     useState<SearchResultInterface | null>(null);
@@ -28,8 +36,14 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   };
 
   const handleClickSearchButton = () => {
+    onSelectedResult?.(null);
     setSelectedResult(null);
   };
+
+  const handleSelectedResult = function (value: SearchResultInterface | null) {
+    onSelectedResult?.(value);
+    setSelectedResult(value);
+  }
 
   return (
     <>
@@ -57,7 +71,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
 
             <SearchResults
               results={results}
-              setSelectedResult={setSelectedResult}
+              setSelectedResult={handleSelectedResult}
             />
           </>
         ) : (
@@ -65,7 +79,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
             <View style={styles.rowContainer}>
               <SearchResultDisplay
                 selectedResult={selectedResult}
-                setSelectedResult={setSelectedResult}
+                setSelectedResult={handleSelectedResult}
                 openModal={() => setModalVisible(true)}
               />
 
