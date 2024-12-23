@@ -1,4 +1,3 @@
-import { mockBusArrival } from "@/app/utils/mockData";
 import { View, StyleSheet, Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -22,6 +21,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  arrivalTextZero: {
+    fontSize: 24,
+    color:'red',
+    fontWeight: "bold",
+    textAlign: "center",
+  },
   blank: {
     flex: 1,
   },
@@ -37,57 +42,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const Item = ({ serviceNo }: { serviceNo: any }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{serviceNo}</Text>
-  </View>
-);
-
-export default function ListRow() {
+export default function ListRow({ busData }: { busData: any }) {
   return (
     <View style={{ flex: 1, flexDirection: "row" }}>
       <FlatList
-        data={mockBusArrival}
+        data={busData.Timings}
         renderItem={({ item }) => (
           <View style={{ flex: 1, flexDirection: "row" }}>
-            <Item serviceNo={item.bus1} />
+            <View style={styles.item}>
+              <Text style={styles.title}>{item.ServiceNo}</Text>
+            </View>
             <Text style={styles.blank}></Text>
-            <View style={styles.arrival}>
-              {item.bus1 === -1 ? (
-                // If any item has id -1, show an error message
-                <View style={styles.triangleCorner1}></View>
-              ) : // Otherwise, render the list or first item as usual
-              mockBusArrival.length > 0 ? (
-                <Text style={styles.arrivalText}>{item.bus1}</Text>
-              ) : (
-                <Text>No data available</Text>
-              )}
-            </View>
-            <View style={styles.arrival}>
-              {item.bus2 === -1 ? (
-                // If any item has id -1, show an error message
-                <View style={styles.triangleCorner1}></View>
-              ) : // Otherwise, render the list or first item as usual
-              mockBusArrival.length > 0 ? (
-                <Text style={styles.arrivalText}>{item.bus2}</Text>
-              ) : (
-                <Text>No data available</Text>
-              )}
-            </View>
-            <View style={styles.arrival}>
-              {item.bus3 === -1 ? (
-                // If any item has id -1, show an error message
-                <View style={styles.triangleCorner1}></View>
-              ) : // Otherwise, render the list or first item as usual
-              mockBusArrival.length > 0 ? (
-                <Text style={styles.arrivalText}>{item.bus3}</Text>
-              ) : (
-                <Text>No data available</Text>
-              )}
+            {/* NextBuses */}
+            <View style={{ flex: 3, flexDirection: "row" }}>
+              {item.NextBuses.map((bus: number, idx: number) => (
+                <View style={styles.arrival} key={`${item.ServiceNo}-bus-${idx}`}>
+                  {bus === -1 ? (
+                    // If bus time is -1, show an error message
+                    <View style={styles.triangleCorner1}></View>
+                  ) : bus === 0 ? (
+                    // If bus time is 0, show a "No buses arriving" message
+                    <Text style={styles.arrivalTextZero}>Arr</Text>
+                  ) : item.NextBuses.length > 0 ? (
+                    // Otherwise, display the bus arrival time
+                    <Text style={styles.arrivalText}>{bus}</Text>
+                  ) : (
+                    <Text>No data available</Text>
+                  )}
+                </View>
+              ))}
             </View>
           </View>
         )}
-        keyExtractor={(item) => item.busStopNo}
+        keyExtractor={(item) => item.ServiceNo}
+        style={{ flex: 1 }}
       />
     </View>
   );
