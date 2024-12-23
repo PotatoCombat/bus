@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 router.get('/', async (req, res) => {
     let busRoutes = req.busRoutes.get(req.query.ServiceNo);
-    if(busRoutes == undefined || null){
+    if(busRoutes == undefined || busRoutes == null){
         res.status(404).send({
             ErrorMessage: "Bus Service Not Found"
         });
