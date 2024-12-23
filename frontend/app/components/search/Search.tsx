@@ -17,13 +17,13 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
   const [results, setResults] = useState<SearchResultInterface[] | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const changeText = (text: string) => {
+  const changeText = async (text: string) => {
     setValue(text);
 
     if (text.length == 0) {
       setResults(null);
     } else {
-      setResults(searchApi(text));
+      searchApi(text).then((value) => setResults(value)).catch((err) => console.log(err));
     }
   };
 
