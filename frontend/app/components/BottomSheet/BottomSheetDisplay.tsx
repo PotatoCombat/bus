@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import { Ref, useCallback, useEffect, useMemo, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import {
@@ -11,11 +11,11 @@ import ListRow from "./ListRow";
 import { mockBusArrival } from "@/app/utils/mockData";
 
 export default function BottomSheetDisplay({
-  onPress,
-  bottomSheetModalRef,
+  onRefresh,
+  bottomSheetModalRef
 }: {
-  onPress: any;
-  bottomSheetModalRef: any;
+  onRefresh?: () => void;
+  bottomSheetModalRef: Ref<BottomSheetModal>;
 }) {
   const [data, setData] = useState(mockBusArrival);
   useEffect(() => {
@@ -25,9 +25,6 @@ export default function BottomSheetDisplay({
   console.log("First Item after refresh:", firstItem); // Log to verify if the first item is being updated correctly
 
   // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
@@ -38,24 +35,13 @@ export default function BottomSheetDisplay({
     console.log("Data after refresh:", data);
     // Set the refreshed data
     setData(refreshedData);
-    onPress(); // Trigger parent onPress if needed
+    onRefresh?.(); // Trigger parent onPress if needed
   };
 
   const snapPoints = useMemo(() => ["50%", "70%"], []);
 
   return (
     <BottomSheetModalProvider>
-      <TouchableHighlight onPress={() => {}}>
-        <View>
-          <Icon
-            name="circle"
-            size={30}
-            color="#FF0000"
-            onPress={handlePresentModalPress}
-          ></Icon>
-        </View>
-      </TouchableHighlight>
-
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}
