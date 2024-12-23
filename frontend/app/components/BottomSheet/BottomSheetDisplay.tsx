@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  TouchableHighlight,
-  FlatList,
   Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -17,51 +15,45 @@ import {
 
 import { fetchBusArrivalData } from "@/app/services/BusArrivalApi";
 import ListRow from "./ListRow";
+
 const { height } = Dimensions.get("window");
+
 export default function BottomSheetDisplays({
-  onPress,
+  busStopCode,
   bottomSheetModalRef,
+  onRefresh,
 }: {
-  onPress: any;
-  bottomSheetModalRef: any;
+  busStopCode?: string;
+  bottomSheetModalRef: Ref<BottomSheetModal>;
+  onRefresh?: () => void;
 }) {
-  const [busData, setBusData] = useState<any>(null);
-  const handleFetchData = async () => {
-    const busStopCode = "77009"; // Use your dynamic bus stop code here
-    const data = await fetchBusArrivalData(busStopCode);
-    if (data) {
-      setBusData(data);
+  let [busData, setBusData] = useState<any>(null);
+  const refreshPending = useRef(true);
+
+  useEffect(() => {
+    if (refreshPending.current && busStopCode) {
+      refreshPending.current = false;
+      fetchBusArrivalData(busStopCode)
+        .then(result => setBusData(result))
+        .catch(console.error);
     }
-  };
-  const handlePresentModalPress = useCallback(() => {
-    handleFetchData();
-    bottomSheetModalRef.current?.present();
-    console.log("busData is here " + busData); // Trigger data fetch when opening the modal
-  }, []);
+  }, [refreshPending.current, busStopCode]);
+
+  // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
-  const handleRefresh = () => {
+
+  const handleRefresh = async () => {
     console.log("Refreshing data...");
-    handleFetchData();
-    onPress(); // Trigger parent onPress if needed
+    refreshPending.current = true;
+    onRefresh?.();
   };
 
-  const snapPoints = useMemo(() => ["50%"], []);
+  const snapPoints = useMemo(() => ["40%"], []);
 
   return (
     <BottomSheetModalProvider>
-      <TouchableHighlight onPress={() => {}}>
-        <View>
-          <Icon
-            name="circle"
-            size={30}
-            color="#FF0000"
-            onPress={handlePresentModalPress}
-          ></Icon>
-        </View>
-      </TouchableHighlight>
-
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}

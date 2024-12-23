@@ -8,6 +8,7 @@ import LoadingScreen from "./components/BottomSheet/LoadingScreen";
 import { mockBusRoute } from './utils/mockBusRoute';
 import SearchResultInterface from "./types/SearchResultInterface";
 import BusRoute from "./components/map/BusRoute";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,37 +39,35 @@ const styles = StyleSheet.create({
 // Function to simulate loading
 // Function to simulate loading
 export default function Index() {
-const [busRoute, setBusRoute] = useState<Array<any>>([]);
-const [selectedBusStop, setSelectedBusStop] = useState<string>('');
+  const [busRoute, setBusRoute] = useState<Array<any>>([]);
+  const [busStop, setBusStop] = useState<string | undefined>(undefined);
+
+  const [loading, setLoading] = useState(false);
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // TODO: Replace with actual API to get busRoute
   const updateBusRoute = function (result: SearchResultInterface | null) {
-    if (result?.serviceNo === '88') {
-      setBusRoute(mockBusRoute);
-      return;
-    }
-    setBusRoute([]);
+    setBusRoute(result?.serviceNo === '88' ? mockBusRoute : []);
   }
 
-  // TODO: Open bus stop timings
   const selectBusStop = function(busStopCode: string) {
-    setSelectedBusStop(busStopCode);
+    setBusStop(busStopCode);
+    bottomSheetModalRef.current?.present();
   }
 
-  // TODO: Close bus stop timings
   const deselectBusStop = function(busStopCode: string) {
-    setSelectedBusStop('');
+    setBusStop(undefined);
+    bottomSheetModalRef.current?.dismiss();
   }
 
-const [loading, setLoading] = useState(false);
-const bottomSheetModalRef = useRef(null);
-const handleButtonClick = () => {
-  setLoading(true);
-  // Show loading for 1 second
-  setTimeout(() => {
-    setLoading(false);
-  }, 1000); // 1000 milliseconds = 1 second
-};
+  const handleButtonClick = () => {
+    setLoading(true);
+    // Show loading for 1 second
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000); // 1000 milliseconds = 1 second
+  };
 
   return (<>
     <GestureHandlerRootView>
@@ -84,12 +83,13 @@ const handleButtonClick = () => {
         >
           <BusRoute
             busRoute={busRoute}
-            onSelectBusStop={() => {}}
-            onDeselectBusStop={() => {}}
+            onSelectBusStop={selectBusStop}
+            onDeselectBusStop={deselectBusStop}
           />
         </MapView>
-          <BottomSheetDisplay 
-              onPress={handleButtonClick}  // Pass button press handler
+          <BottomSheetDisplay
+              busStopCode={busStop}
+              onRefresh={handleButtonClick}  // Pass button press handler
               bottomSheetModalRef={bottomSheetModalRef}  // Pass ref to BottomSheet
             />
           <Search style={styles.search} onSelectedResult={updateBusRoute} />
