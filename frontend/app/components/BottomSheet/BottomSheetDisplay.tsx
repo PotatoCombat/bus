@@ -112,7 +112,6 @@ export default function BottomSheetDisplays({
       </BottomSheetModal>
     </BottomSheetModalProvider>
   );
-
 }
 
 const styles = StyleSheet.create({

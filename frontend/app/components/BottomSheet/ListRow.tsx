@@ -80,4 +80,3 @@ export default function ListRow({ busData }: { busData: any }) {
     </View>
   );
 }
-
