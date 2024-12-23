@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Ref, useCallback, useMemo, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  TouchableHighlight,
-  FlatList,
   Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -17,14 +15,17 @@ import {
 
 import { fetchBusArrivalData } from "@/app/services/BusArrivalApi";
 import ListRow from "./ListRow";
+
 const { height } = Dimensions.get("window");
+
 export default function BottomSheetDisplays({
-  onPress,
+  onRefresh,
   bottomSheetModalRef,
 }: {
-  onPress: any;
-  bottomSheetModalRef: any;
+  onRefresh?: () => void;
+  bottomSheetModalRef: Ref<BottomSheetModal>;
 }) {
+
   const [busData, setBusData] = useState<any>(null);
   const handleFetchData = async () => {
     const busStopCode = "77009"; // Use your dynamic bus stop code here
@@ -33,35 +34,24 @@ export default function BottomSheetDisplays({
       setBusData(data);
     }
   };
-  const handlePresentModalPress = useCallback(() => {
-    handleFetchData();
-    bottomSheetModalRef.current?.present();
-    console.log("busData is here " + busData); // Trigger data fetch when opening the modal
-  }, []);
+
+  // const [data, setData] = useState(mockBusArrival);
+
+  // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
+
   const handleRefresh = () => {
     console.log("Refreshing data...");
     handleFetchData();
-    onPress(); // Trigger parent onPress if needed
+    onRefresh?.();
   };
 
   const snapPoints = useMemo(() => ["50%"], []);
 
   return (
     <BottomSheetModalProvider>
-      <TouchableHighlight onPress={() => {}}>
-        <View>
-          <Icon
-            name="circle"
-            size={30}
-            color="#FF0000"
-            onPress={handlePresentModalPress}
-          ></Icon>
-        </View>
-      </TouchableHighlight>
-
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}

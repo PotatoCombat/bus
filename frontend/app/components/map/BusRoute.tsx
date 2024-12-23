@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Marker, Polyline } from "react-native-maps";
 
 const getBusStopLatLng = function(busStop: any) {
@@ -17,16 +17,26 @@ export default function BusRoute(
   }
 ) {
   const [selectedBusStop, setSelectedBusStop] = useState<string>();
+  const deselectPending = useRef(false);
 
-  const selectBusStop = function(busStopCode: string) {
+  const selectBusStop = function (busStopCode: string) {
+    deselectPending.current = false;
     setSelectedBusStop(busStopCode);
     onSelectBusStop?.(busStopCode);
-  }
+  };
 
-  const deselectBusStop = function(busStopCode: string) {
-    setSelectedBusStop('');
-    onDeselectBusStop?.(busStopCode);
-  }
+  const deselectBusStop = function (busStopCode: string) {
+    deselectPending.current = true;
+    setSelectedBusStop((prevBusStop) => {
+      Promise.resolve().then(() => {
+        if (deselectPending.current && prevBusStop === busStopCode) {
+          deselectPending.current = false;
+          onDeselectBusStop?.(busStopCode);
+        }
+      });
+      return '';
+    });
+  };
 
   return (
     <>
