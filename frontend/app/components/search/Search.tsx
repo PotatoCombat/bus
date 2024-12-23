@@ -23,7 +23,9 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
     if (text.length == 0) {
       setResults(null);
     } else {
-      searchApi(text).then((value) => setResults(value)).catch((err) => console.log(err));
+      searchApi(text)
+        .then((value) => setResults(value))
+        .catch((err) => console.log(err));
     }
   };
 
