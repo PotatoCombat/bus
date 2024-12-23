@@ -6,6 +6,7 @@ router.get('/', async (req, res) => {
         res.status(404).send({
             ErrorMessage: "Bus Service Not Found"
         });
+        return;
     }
     if (req.query.Direction) {
         let busService = req.busServices.get(req.query.ServiceNo.toString()).get(req.query.Direction.toString());
