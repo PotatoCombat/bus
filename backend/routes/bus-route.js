@@ -2,6 +2,11 @@ const router = require('express').Router();
 
 router.get('/', async (req, res) => {
     let busRoutes = req.busRoutes.get(req.query.ServiceNo);
+    if(busRoutes == undefined || null){
+        res.status(404).send({
+            ErrorMessage: "Bus Service Not Found"
+        });
+    }
     if (req.query.Direction) {
         let busService = req.busServices.get(req.query.ServiceNo.toString()).get(req.query.Direction.toString());
         let stopsOfDirection = busRoutes.get(req.query.Direction);
