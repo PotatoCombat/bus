@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 });
 
 // Function to simulate loading
+// Function to simulate loading
 export default function Index() {
   
 const [loading, setLoading] = useState(false);
