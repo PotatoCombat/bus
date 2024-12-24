@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   View,
@@ -7,6 +8,10 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
+=======
+import { Ref, useCallback, useEffect, useMemo, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+>>>>>>> 29b1741 (FE: Connect bus route and bottom sheet)
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import {
@@ -15,16 +20,23 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 
+<<<<<<< HEAD
 import { fetchBusArrivalData } from "@/app/services/BusArrivalApi";
 import ListRow from "./ListRow";
 const { height } = Dimensions.get("window");
 export default function BottomSheetDisplays({
   onPress,
   bottomSheetModalRef,
+=======
+export default function BottomSheetDisplay({
+  onRefresh,
+  bottomSheetModalRef
+>>>>>>> 29b1741 (FE: Connect bus route and bottom sheet)
 }: {
-  onPress: any;
-  bottomSheetModalRef: any;
+  onRefresh?: () => void;
+  bottomSheetModalRef: Ref<BottomSheetModal>;
 }) {
+<<<<<<< HEAD
   const [busData, setBusData] = useState<any>(null);
   const handleFetchData = async () => {
     const busStopCode = "77009"; // Use your dynamic bus stop code here
@@ -38,30 +50,38 @@ export default function BottomSheetDisplays({
     bottomSheetModalRef.current?.present();
     console.log("busData is here " + busData); // Trigger data fetch when opening the modal
   }, []);
+=======
+  const [data, setData] = useState(mockBusArrival);
+  useEffect(() => {
+    console.log("Data updated:", data); // Log the state of the data array
+  }, [data]);
+  const firstItem = data && data.length > 0 ? data[0] : null; // Safely handle empty data array
+  console.log("First Item after refresh:", firstItem); // Log to verify if the first item is being updated correctly
+
+  // callbacks
+>>>>>>> 29b1741 (FE: Connect bus route and bottom sheet)
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
   const handleRefresh = () => {
     console.log("Refreshing data...");
+<<<<<<< HEAD
     handleFetchData();
     onPress(); // Trigger parent onPress if needed
+=======
+    const refreshedData = [...mockBusArrival]; // For example, just using mock data again
+    console.log("First Item:", firstItem);
+    console.log("Data after refresh:", data);
+    // Set the refreshed data
+    setData(refreshedData);
+    onRefresh?.(); // Trigger parent onPress if needed
+>>>>>>> 29b1741 (FE: Connect bus route and bottom sheet)
   };
 
   const snapPoints = useMemo(() => ["50%"], []);
 
   return (
     <BottomSheetModalProvider>
-      <TouchableHighlight onPress={() => {}}>
-        <View>
-          <Icon
-            name="circle"
-            size={30}
-            color="#FF0000"
-            onPress={handlePresentModalPress}
-          ></Icon>
-        </View>
-      </TouchableHighlight>
-
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}
