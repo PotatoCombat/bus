@@ -69,6 +69,7 @@ export default function Search({ style }: { style: StyleProp<ViewStyle> }) {
                 selectedResult={selectedResult}
                 setSelectedResult={setSelectedResult}
                 openModal={() => setModalVisible(true)}
+                isSwitchableRoute={results != null && results.length > 1}
               />
 
               <TouchableHighlight

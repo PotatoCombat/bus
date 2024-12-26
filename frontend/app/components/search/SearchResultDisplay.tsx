@@ -14,12 +14,13 @@ export default function SearchResultDisplay({
   selectedResult,
   setSelectedResult,
   openModal,
+  isSwitchableRoute,
 }: {
   selectedResult: SearchResultInterface;
   setSelectedResult: Function;
   openModal: Function;
+  isSwitchableRoute: boolean;
 }) {
-
   const handleClickSwitchButton = () => {
     setSelectedResult((prev: SearchResultInterface | null) => {
       if (prev == null) {
@@ -73,11 +74,17 @@ export default function SearchResultDisplay({
           onPress={() => handleClickSwitchButton()}
           style={{ width: 22, height: 22, flexGrow: 1 }}
           activeOpacity={0.6}
+          disabled={!isSwitchableRoute}
         >
           <View>
             <Icon
               name="sync-alt"
-              style={{ transform: [{ rotate: "90deg" }] }}
+              style={{
+                transform: [{ rotate: "90deg" }],
+              }}
+              color={
+                isSwitchableRoute ? Colors.neutral.black : Colors.neutral.s100
+              }
             />
           </View>
         </TouchableOpacity>
