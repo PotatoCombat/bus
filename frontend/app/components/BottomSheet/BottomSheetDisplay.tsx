@@ -1,4 +1,4 @@
-import { Ref, useCallback, useMemo, useState } from "react";
+import { Ref, useCallback, useEffect, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -19,32 +19,33 @@ import ListRow from "./ListRow";
 const { height } = Dimensions.get("window");
 
 export default function BottomSheetDisplays({
-  onRefresh,
+  busStopCode,
   bottomSheetModalRef,
+  onRefresh,
 }: {
-  onRefresh?: () => void;
+  busStopCode: string;
   bottomSheetModalRef: Ref<BottomSheetModal>;
+  onRefresh?: () => void;
 }) {
+  let [busData, setBusData] = useState<any>(null);
 
-  const [busData, setBusData] = useState<any>(null);
-  const handleFetchData = async () => {
-    const busStopCode = "77009"; // Use your dynamic bus stop code here
-    const data = await fetchBusArrivalData(busStopCode);
-    if (data) {
-      setBusData(data);
+  useEffect(() => {
+    if (busStopCode) {
+      console.log(busStopCode);
+      fetchBusArrivalData(busStopCode)
+        .then(result => setBusData(result))
+        .catch(console.error);
     }
-  };
-
-  // const [data, setData] = useState(mockBusArrival);
+  }, [busStopCode]);
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     console.log("Refreshing data...");
-    handleFetchData();
+    await fetchBusArrivalData(busStopCode);
     onRefresh?.();
   };
 

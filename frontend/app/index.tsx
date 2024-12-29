@@ -86,6 +86,7 @@ const handleButtonClick = () => {
           />
         </MapView>
           <BottomSheetDisplay
+              busStopCode="77009"
               onRefresh={handleButtonClick}  // Pass button press handler
               bottomSheetModalRef={bottomSheetModalRef}  // Pass ref to BottomSheet
             />
