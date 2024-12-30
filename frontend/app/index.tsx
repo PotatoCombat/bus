@@ -1,14 +1,14 @@
-import { StyleSheet, View } from "react-native";
-import MapView from "react-native-maps";
-import Search from "./components/search/Search";
-import { useRef, useState } from "react";
-import BottomSheetDisplay from "./components/BottomSheet/BottomSheetDisplay";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import LoadingScreen from "./components/BottomSheet/LoadingScreen";
-import { mockBusRoute } from './utils/mockBusRoute';
-import SearchResultInterface from "./types/SearchResultInterface";
-import BusRoute from "./components/map/BusRoute";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import MapView from "react-native-maps";
+import BottomSheetDisplay from "./components/BottomSheet/BottomSheetDisplay";
+import LoadingScreen from "./components/BottomSheet/LoadingScreen";
+import BusRoute from "./components/map/BusRoute";
+import Search from "./components/search/Search";
+import BusRouteInterface from "./types/BusRouteInterface";
+import { mockBusRoute } from './utils/mockBusRoute';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,8 +45,8 @@ export default function Index() {
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const selectBusRoute = function (result: SearchResultInterface) {
-    setBusRoute(result?.serviceNo === '88' ? mockBusRoute : []);
+  const selectBusRoute = function (result: BusRouteInterface) {
+    setBusRoute(mockBusRoute);
   }
 
   const clearBusRoute = function () {

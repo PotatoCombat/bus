@@ -1,5 +1,7 @@
+import busRouteApi from "@/app/services/BusRouteApi";
 import searchApi from "@/app/services/SearchApi";
 import { Colors, Sizing } from "@/app/styles";
+import BusRouteInterface from "@/app/types/BusRouteInterface";
 import SearchResultInterface from "@/app/types/SearchResultInterface";
 import { searchBarPlaceholderText } from "@/app/utils/strings";
 import { Icon, SearchBar } from "@rneui/themed";
@@ -17,7 +19,7 @@ export default function Search(
     onClearedResult,
   }: {
     style: StyleProp<ViewStyle>,
-    onSelectedResult?: (result: SearchResultInterface) => void
+    onSelectedResult?: (result: BusRouteInterface) => void
     onClearedResult?: () => void
   }
 ) {
@@ -45,14 +47,20 @@ export default function Search(
 
   const handleSelectedResult = function (index: number) {
     setSelectedIndex(index);
-    onSelectedResult?.(results[index]);
+    busRouteApi(value)
+      .then(response => response.Routes[index])
+      .then(result => onSelectedResult?.(result));
   }
 
   const handleSwitchRoute = () => {
     if (selectedIndex === undefined) {
       return;
     }
-    setSelectedIndex(prev => prev === 0 ? 1 : 0);
+    const nextIndex = selectedIndex === 0 ? 1 : 0;
+    setSelectedIndex(nextIndex);
+    busRouteApi(value)
+      .then(response => response.Routes[nextIndex])
+      .then(result => onSelectedResult?.(result));
   };
 
   return (

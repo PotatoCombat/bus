@@ -1,6 +1,5 @@
-import BusRouteInterface from "../types/BusRouteInterface";
-import SearchResultInterface from "../types/SearchResultInterface";
-import busStopApi from "./BusStopApi";
+import BusRouteInterface from "@/app/types/BusRouteInterface";
+import SearchResultInterface from "@/app/types/SearchResultInterface";
 import { BUS_ROUTES_URL, SERVICE_NO_PARAM } from "./urls";
 
 export default async function searchApi(
@@ -12,30 +11,25 @@ export default async function searchApi(
     );
 
     if (response.status == 404) {
-      return new Promise((resolve) => {
-        resolve([]);
-      });
-    } else if (!response.ok) {
+      return [];
+    }
+    if (!response.ok) {
       throw new Error(
         `${response.status.toString()}: ${await response.text()}`
       );
     }
 
-    const data = await response.json();
+    return await response.json()
+      .then(data => data.Routes as BusRouteInterface[])
+      .then(routes => routes.map(route => ({
+        serviceNo: serviceNo,
+        originRoadName: route.Origin.RoadName,
+        destinationRoadName: route.Destination.RoadName,
+      }) as SearchResultInterface));
 
-    return Promise.all(
-      data.Routes.map(async (route: BusRouteInterface) => ({
-        serviceNo,
-        originRoadName: (await busStopApi(route.OriginCode))?.RoadName,
-        destinationRoadName: (await busStopApi(route.DestinationCode))
-          ?.RoadName,
-      }))
-    );
   } catch (error) {
     console.error("Error fetching bus data:", error);
 
-    return new Promise((resolve) => {
-      resolve([]);
-    });
+    return [];
   }
 }
