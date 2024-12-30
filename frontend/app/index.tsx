@@ -45,9 +45,12 @@ export default function Index() {
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  // TODO: Replace with actual API to get busRoute
-  const updateBusRoute = function (result: SearchResultInterface | null) {
+  const selectBusRoute = function (result: SearchResultInterface) {
     setBusRoute(result?.serviceNo === '88' ? mockBusRoute : []);
+  }
+
+  const clearBusRoute = function () {
+    setBusRoute([]);
   }
 
   const selectBusStop = function(busStopCode: string) {
@@ -91,7 +94,11 @@ export default function Index() {
               onRefresh={handleButtonClick}  // Pass button press handler
               bottomSheetModalRef={bottomSheetModalRef}  // Pass ref to BottomSheet
             />
-          <Search style={styles.search} onSelectedResult={updateBusRoute} />
+          <Search
+            style={styles.search}
+            onSelectedResult={selectBusRoute}
+            onClearedResult={clearBusRoute}
+          />
           {loading ? (
             <LoadingScreen />  // Show loading screen while loading is true
           ) : (
