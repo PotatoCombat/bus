@@ -87,7 +87,7 @@ export default function Search(
 
             <SearchResults
               results={results}
-              setSelectedResult={handleSelectedResult}
+              onSelectResult={handleSelectedResult}
             />
           </>
         ) : (
