@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
 });
 
 // Function to simulate loading
-// Function to simulate loading
 export default function Index() {
   const [busRoute, setBusRoute] = useState<Array<any>>([]);
   const [busStop, setBusStop] = useState<string | undefined>(undefined);
