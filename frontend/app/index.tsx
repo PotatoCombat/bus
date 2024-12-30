@@ -1,14 +1,13 @@
+import BottomSheetDisplay from "@/app/components/BottomSheet/BottomSheetDisplay";
+import LoadingScreen from "@/app/components/BottomSheet/LoadingScreen";
+import BusRoute from "@/app/components/map/BusRoute";
+import Search from "@/app/components/search/Search";
+import BusRouteInterface from "@/app/types/BusRouteInterface";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import MapView from "react-native-maps";
-import BottomSheetDisplay from "./components/BottomSheet/BottomSheetDisplay";
-import LoadingScreen from "./components/BottomSheet/LoadingScreen";
-import BusRoute from "./components/map/BusRoute";
-import Search from "./components/search/Search";
-import BusRouteInterface from "./types/BusRouteInterface";
-import { mockBusRoute } from './utils/mockBusRoute';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
 
 // Function to simulate loading
 export default function Index() {
-  const [busRoute, setBusRoute] = useState<Array<any>>([]);
+  const [busRoute, setBusRoute] = useState<BusRouteInterface | undefined>();
   const [busStop, setBusStop] = useState<string | undefined>(undefined);
 
   const [loading, setLoading] = useState(false);
@@ -46,11 +45,11 @@ export default function Index() {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const selectBusRoute = function (result: BusRouteInterface) {
-    setBusRoute(mockBusRoute);
+    setBusRoute(result);
   }
 
   const clearBusRoute = function () {
-    setBusRoute([]);
+    setBusRoute(undefined);
   }
 
   const selectBusStop = function(busStopCode: string) {
@@ -83,11 +82,13 @@ export default function Index() {
             longitudeDelta: 0.55,
           }}
         >
-          <BusRoute
-            busRoute={busRoute}
-            onSelectBusStop={selectBusStop}
-            onDeselectBusStop={deselectBusStop}
-          />
+          {busRoute !== undefined && (
+            <BusRoute
+              busRoute={busRoute}
+              onSelectBusStop={selectBusStop}
+              onDeselectBusStop={deselectBusStop}
+            />
+          )}
         </MapView>
           <BottomSheetDisplay
               busStopCode={busStop}
