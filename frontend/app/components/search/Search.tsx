@@ -47,6 +47,20 @@ export default function Search(
     setSelectedResult(value);
   }
 
+  const handleSwitchRoute = () => {
+    setSelectedResult(prev => {
+      if (prev == null) {
+        return null;
+      }
+
+      return {
+        serviceNo: prev.serviceNo,
+        originRoadName: prev.destinationRoadName,
+        destinationRoadName: prev.originRoadName,
+      };
+    });
+  };
+
   return (
     <>
       <View style={style}>
@@ -80,10 +94,10 @@ export default function Search(
           <>
             <View style={styles.rowContainer}>
               <SearchResultDisplay
-                selectedResult={selectedResult}
-                setSelectedResult={handleSelectedResult}
-                openModal={() => setModalVisible(true)}
+                result={selectedResult}
                 isSwitchableRoute={results != null && results.length > 1}
+                onPress={() => setModalVisible(true)}
+                onSwitchRoute={handleSwitchRoute}
               />
 
               <TouchableHighlight
