@@ -7,10 +7,10 @@ import styles, { ROW_HEIGHT } from "./styles";
 
 export default function SearchResults({
   results,
-  setSelectedResult,
+  onSelectResult,
 }: {
   results: SearchResultInterface[] | null;
-  setSelectedResult: Function;
+  onSelectResult: (item: SearchResultInterface) => void;
 }) {
   if (results === null) {
     return <></>;
@@ -29,7 +29,7 @@ export default function SearchResults({
         renderItem={({ item, index }) => (
           <TouchableHighlight
             key={item.serviceNo + index}
-            onPress={() => setSelectedResult(item)}
+            onPress={() => onSelectResult(item)}
             activeOpacity={0.6}
             underlayColor={Colors.neutral.s100}
           >
