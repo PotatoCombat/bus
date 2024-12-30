@@ -10,7 +10,7 @@ export default function SearchResults({
   onSelectResult,
 }: {
   results: SearchResultInterface[] | null;
-  onSelectResult: (item: SearchResultInterface) => void;
+  onSelectResult: (index: number) => void;
 }) {
   if (results === null) {
     return <></>;
@@ -29,7 +29,7 @@ export default function SearchResults({
         renderItem={({ item, index }) => (
           <TouchableHighlight
             key={item.serviceNo + index}
-            onPress={() => onSelectResult(item)}
+            onPress={() => onSelectResult(index)}
             activeOpacity={0.6}
             underlayColor={Colors.neutral.s100}
           >

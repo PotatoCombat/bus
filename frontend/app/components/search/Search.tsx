@@ -1,75 +1,69 @@
+import searchApi from "@/app/services/SearchApi";
+import { Colors, Sizing } from "@/app/styles";
+import SearchResultInterface from "@/app/types/SearchResultInterface";
+import { searchBarPlaceholderText } from "@/app/utils/strings";
+import { Icon, SearchBar } from "@rneui/themed";
 import { useState } from "react";
 import { StyleProp, TouchableHighlight, View, ViewStyle } from "react-native";
-import { Icon, SearchBar } from "@rneui/themed";
-import styles from "./styles";
-import SearchResultInterface from "@/app/types/SearchResultInterface";
-import searchApi from "@/app/services/SearchApi";
-import SearchResults from "./SearchResults";
-import { searchBarPlaceholderText } from "@/app/utils/strings";
-import SearchResultDisplay from "./SearchResultDisplay";
-import { Colors, Sizing } from "@/app/styles";
 import RoadNamesModal from "../modals/RoadNamesModal";
+import SearchResultDisplay from "./SearchResultDisplay";
+import SearchResults from "./SearchResults";
+import styles from "./styles";
 
 export default function Search(
   {
     style,
-    onSelectedResult
+    onSelectedResult,
+    onClearedResult,
   }: {
     style: StyleProp<ViewStyle>,
     onSelectedResult?: (result: SearchResultInterface | null) => void
+    onClearedResult?: () => void
   }
 ) {
-  const [value, setValue] = useState("");
-  const [selectedResult, setSelectedResult] =
-    useState<SearchResultInterface | null>(null);
-  const [results, setResults] = useState<SearchResultInterface[] | null>(null);
+  const [value, setValue] = useState('');
+  const [results, setResults] = useState<SearchResultInterface[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
   const [modalVisible, setModalVisible] = useState(false);
 
   const changeText = async (text: string) => {
     setValue(text);
 
     if (text.length == 0) {
-      setResults(null);
+      setResults([]);
     } else {
       searchApi(text)
-        .then((value) => setResults(value))
-        .catch((err) => console.log(err));
+        .then(setResults)
+        .catch(console.error);
     }
   };
 
   const handleClickSearchButton = () => {
-    onSelectedResult?.(null);
-    setSelectedResult(null);
+    setSelectedIndex(undefined);
+    onClearedResult?.();
   };
 
-  const handleSelectedResult = function (value: SearchResultInterface | null) {
-    onSelectedResult?.(value);
-    setSelectedResult(value);
+  const handleSelectedResult = function (index: number) {
+    setSelectedIndex(index);
+    onSelectedResult?.(results[index]);
   }
 
   const handleSwitchRoute = () => {
-    setSelectedResult(prev => {
-      if (prev == null) {
-        return null;
-      }
-
-      return {
-        serviceNo: prev.serviceNo,
-        originRoadName: prev.destinationRoadName,
-        destinationRoadName: prev.originRoadName,
-      };
-    });
+    if (selectedIndex === undefined) {
+      return;
+    }
+    setSelectedIndex(prev => prev === 0 ? 1 : 0);
   };
 
   return (
     <>
       <View style={style}>
-        {selectedResult == null ? (
+        {selectedIndex === undefined ? (
           <>
             <SearchBar
               containerStyle={styles.searchBarContainer}
               inputContainerStyle={
-                results != null
+                value.length > 0
                   ? styles.searchedInputContainer
                   : styles.inputContainer
               }
@@ -86,7 +80,7 @@ export default function Search(
             />
 
             <SearchResults
-              results={results}
+              results={value.length > 0 ? results : null}
               onSelectResult={handleSelectedResult}
             />
           </>
@@ -94,8 +88,8 @@ export default function Search(
           <>
             <View style={styles.rowContainer}>
               <SearchResultDisplay
-                result={selectedResult}
-                isSwitchableRoute={results != null && results.length > 1}
+                result={results[selectedIndex]}
+                isSwitchableRoute={results.length > 1}
                 onPress={() => setModalVisible(true)}
                 onSwitchRoute={handleSwitchRoute}
               />
@@ -120,8 +114,8 @@ export default function Search(
       <RoadNamesModal
         visible={modalVisible}
         closeModal={() => setModalVisible(false)}
-        originRoadName={selectedResult?.originRoadName}
-        destinationRoadName={selectedResult?.destinationRoadName}
+        originRoadName={selectedIndex !== undefined ? results[selectedIndex].originRoadName : ''}
+        destinationRoadName={selectedIndex !== undefined ? results[selectedIndex].destinationRoadName : ''}
       />
     </>
   );
