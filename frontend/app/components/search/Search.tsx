@@ -17,7 +17,7 @@ export default function Search(
     onClearedResult,
   }: {
     style: StyleProp<ViewStyle>,
-    onSelectedResult?: (result: SearchResultInterface | null) => void
+    onSelectedResult?: (result: SearchResultInterface) => void
     onClearedResult?: () => void
   }
 ) {
