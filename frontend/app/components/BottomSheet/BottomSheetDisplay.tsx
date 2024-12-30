@@ -18,7 +18,7 @@ import ListRow from "./ListRow";
 
 const { height } = Dimensions.get("window");
 
-export default function BottomSheetDisplays({
+export default function BottomSheetDisplay({
   busStopCode,
   bottomSheetModalRef,
   onRefresh,
@@ -27,17 +27,30 @@ export default function BottomSheetDisplays({
   bottomSheetModalRef: Ref<BottomSheetModal>;
   onRefresh?: () => void;
 }) {
-  let [busData, setBusData] = useState<any>(null);
-  const refreshPending = useRef(true);
+  const [busData, setBusData] = useState<any>(null);
+  const [refreshing, setRefreshing] = useState(false); // To track refresh status
 
+  // Function to fetch bus arrival data
+  const fetchBusData = (code: string) => {
+    setRefreshing(true);
+    fetchBusArrivalData(code)
+      .then(result => {
+        setBusData(result);
+      })
+      .catch(console.error)
+      .finally(() => {
+        setRefreshing(false);
+      });
+  };
+
+  // Fetch data when the busStopCode changes
   useEffect(() => {
-    if (refreshPending.current && busStopCode) {
-      refreshPending.current = false;
-      fetchBusArrivalData(busStopCode)
-        .then(result => setBusData(result))
-        .catch(console.error);
+    if (busStopCode) {
+      fetchBusData(busStopCode);
     }
-  }, [refreshPending.current, busStopCode]);
+  }, [busStopCode]);
+
+  
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
@@ -45,12 +58,13 @@ export default function BottomSheetDisplays({
   }, []);
 
   const handleRefresh = async () => {
-    console.log("Refreshing data...");
-    refreshPending.current = true;
-    onRefresh?.();
+    if (busStopCode) {
+      fetchBusData(busStopCode); // Re-fetch the data for the current bus stop
+      onRefresh?.(); // Notify the parent component if needed
+    }
   };
 
-  const snapPoints = useMemo(() => ["40%"], []);
+  const snapPoints = useMemo(() => ["45%"], []);
 
   return (
     <BottomSheetModalProvider>
