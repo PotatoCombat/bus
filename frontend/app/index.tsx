@@ -1,14 +1,13 @@
-import { StyleSheet, View } from "react-native";
-import MapView from "react-native-maps";
-import Search from "./components/search/Search";
-import { useRef, useState } from "react";
-import BottomSheetDisplay from "./components/BottomSheet/BottomSheetDisplay";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import LoadingScreen from "./components/BottomSheet/LoadingScreen";
-import { mockBusRoute } from './utils/mockBusRoute';
-import SearchResultInterface from "./types/SearchResultInterface";
-import BusRoute from "./components/map/BusRoute";
+import BottomSheetDisplay from "@/app/components/BottomSheet/BottomSheetDisplay";
+import LoadingScreen from "@/app/components/BottomSheet/LoadingScreen";
+import BusRoute from "@/app/components/map/BusRoute";
+import Search from "@/app/components/search/Search";
+import BusRouteInterface from "@/app/types/BusRouteInterface";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import MapView from "react-native-maps";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,16 +37,19 @@ const styles = StyleSheet.create({
 
 // Function to simulate loading
 export default function Index() {
-  const [busRoute, setBusRoute] = useState<Array<any>>([]);
+  const [busRoute, setBusRoute] = useState<BusRouteInterface | undefined>();
   const [busStop, setBusStop] = useState<string | undefined>(undefined);
 
   const [loading, setLoading] = useState(false);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  // TODO: Replace with actual API to get busRoute
-  const updateBusRoute = function (result: SearchResultInterface | null) {
-    setBusRoute(result?.serviceNo === '88' ? mockBusRoute : []);
+  const selectBusRoute = function (result: BusRouteInterface) {
+    setBusRoute(result);
+  }
+
+  const clearBusRoute = function () {
+    setBusRoute(undefined);
   }
 
   const selectBusStop = function(busStopCode: string) {
@@ -80,18 +82,24 @@ export default function Index() {
             longitudeDelta: 0.55,
           }}
         >
-          <BusRoute
-            busRoute={busRoute}
-            onSelectBusStop={selectBusStop}
-            onDeselectBusStop={deselectBusStop}
-          />
+          {busRoute !== undefined && (
+            <BusRoute
+              busRoute={busRoute}
+              onSelectBusStop={selectBusStop}
+              onDeselectBusStop={deselectBusStop}
+            />
+          )}
         </MapView>
           <BottomSheetDisplay
               busStopCode={busStop}
               onRefresh={handleButtonClick}  // Pass button press handler
               bottomSheetModalRef={bottomSheetModalRef}  // Pass ref to BottomSheet
             />
-          <Search style={styles.search} onSelectedResult={updateBusRoute} />
+          <Search
+            style={styles.search}
+            onSelectedResult={selectBusRoute}
+            onClearedResult={clearBusRoute}
+          />
           {loading ? (
             <LoadingScreen />  // Show loading screen while loading is true
           ) : (

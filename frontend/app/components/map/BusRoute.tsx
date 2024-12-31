@@ -1,3 +1,4 @@
+import BusRouteInterface from "@/app/types/BusRouteInterface";
 import { useRef, useState } from "react";
 import { Marker, Polyline } from "react-native-maps";
 
@@ -11,7 +12,7 @@ export default function BusRoute(
     onSelectBusStop,
     onDeselectBusStop
   }: {
-    busRoute: Array<any>,
+    busRoute: BusRouteInterface,
     onSelectBusStop?: (busStopCode: string) => void,
     onDeselectBusStop?: (busStopCode: string) => void
   }
@@ -40,16 +41,16 @@ export default function BusRoute(
 
   return (
     <>
-      {busRoute.at(-1) &&
+      {busRoute.Destination &&
         <Marker
           key={'destination'}
-          coordinate={getBusStopLatLng(busRoute.at(-1))}
+          coordinate={getBusStopLatLng(busRoute.Destination)}
           tappable={false}
         />
       }
-      {busRoute.map(busStop => (
+      {busRoute.BusStops.map((busStop, index) => (
         <Marker
-          key={busStop.BusStopCode}
+          key={index}
           coordinate={getBusStopLatLng(busStop)}
           title={busStop.Description}
           description={busStop.RoadName}
@@ -65,7 +66,7 @@ export default function BusRoute(
         </Marker>
       ))}
       <Polyline
-        coordinates={busRoute.map(getBusStopLatLng)}
+        coordinates={busRoute.BusStops.map(getBusStopLatLng)}
         strokeColor="#AA0000"
         strokeWidth={6}
       />

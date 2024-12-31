@@ -1,5 +1,7 @@
+import BusStopInterface from "./BusStopInterface";
+
 export default interface BusRouteInterface {
-  OriginCode: string;
-  DestinationCode: string;
-  BusStops: string[];
+  Origin: BusStopInterface;
+  Destination: BusStopInterface;
+  BusStops: BusStopInterface[];
 }
